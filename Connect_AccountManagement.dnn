@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="Connect AccountManagement" type="Module" version="01.03.00">
+    <package name="Connect AccountManagement" type="Module" version="01.04.00">
       <friendlyName>Connect: AccountManagement</friendlyName>
       <description>A community module that handles account management in DNN</description>
       <iconFile>Desktopmodules/Connect/AccountManagement/Images/icnModule.png</iconFile>
@@ -12,9 +12,10 @@
       </owner>
       <license src="License.txt"/>
       <releaseNotes src="ReleaseNotes.txt" />
+      <azureCompatible>true</azureCompatible>
 
       <dependencies>
-        <dependency type="CoreVersion">07.02.01</dependency>
+        <dependency type="CoreVersion">08.00.03</dependency>
       </dependencies>
 
       <components>
@@ -113,12 +114,15 @@
           
         <component type="Assembly">
           <assemblies>
-            <basePath>bin</basePath>
             <assembly>
               <name>Connect.Modules.AccountManagement.dll</name>
+              <version>01.04.00</version>
+              <path>bin</path>
             </assembly>            
             <assembly>
               <name>Connect.Libraries.UserManagement.dll</name>
+              <version>01.04.00</version>
+              <path>bin</path>
             </assembly>              
           </assemblies>
         </component>
