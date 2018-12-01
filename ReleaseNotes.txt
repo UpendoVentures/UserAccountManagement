@@ -9,6 +9,26 @@
 
 	<h3>Release Notes</h3>
 	<p class="Owner">
+		<b>Version 01.04.00</b>
+	</p>
+	<p>Major Release</p>
+
+	<p><strong style="color: red;">IMPORTANT NOTE:</strong> This release was built and distributed by Will Strohl &amp; <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a>. It's not an official release from or supported by Phillipp Becker. &nbsp;It is in no way owned by Will Strohl or Upendo Ventures.</p>
+	
+	<ul>
+		<li>Updated the module suite to use the deprecated DNN/telerik library &amp; implementation.</li>
+		<li>Updated the MSBuild implementation for multiple environments (kind of a hack though, due to the existing solution architecture).</li>
+		<li>Corrected gitignore to include installation packages but exclude build dependencies in the packages directory.</li>
+		<li>Raised DNN minimum dependency to 08.00.03.</li>
+		<li>Updated .NET dependency to 4.5.1.</li>
+		<li>Resolved EVS package errors.</li>
+		<li>Marked module packages as Azure compatible (after testing/verified using EVS).</li>
+		<li>Removed dependency for the DNN website to be in a specific location so it can build for anyone.</li>
+		<li>Updated library references consistent for potential future solution restructure and consistency.</li>
+		<li>Made IIS settings unique per dev environment to not force everyone to use the same website name/location.</li>
+	</ul>
+
+	<p class="Owner">
 		<b>Version 01.03.00</b>
 	</p>
 	<p>Major Release</p>

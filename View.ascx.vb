@@ -766,9 +766,9 @@ Namespace Connect.Modules.UserManagement.AccountManagement
                 Dim users As New List(Of UserInfo)
                 users.Add(User)
                 SendMessage(users, txtMessageSubject.Text, txtMessageBody.Text)
-                DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, Localization.GetString("InternalMessagesSent", LocalResourceFile), Skins.Controls.ModuleMessage.ModuleMessageType.GreenSuccess)
+                DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, Localization.GetString("InternalMessagesSent", LocalResourceFile), DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.GreenSuccess)
             Catch ex As Exception
-                DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, String.Format(Localization.GetString("InternalMessagesNotSent", LocalResourceFile), ex.Message), Skins.Controls.ModuleMessage.ModuleMessageType.RedError)
+                DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, String.Format(Localization.GetString("InternalMessagesNotSent", LocalResourceFile), ex.Message), DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.RedError)
             End Try
 
         End Sub
@@ -803,9 +803,9 @@ Namespace Connect.Modules.UserManagement.AccountManagement
                     Next
 
                     If resultMsg = "" Then
-                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, Localization.GetString("MessagesSent", LocalResourceFile), Skins.Controls.ModuleMessage.ModuleMessageType.GreenSuccess)
+                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, Localization.GetString("MessagesSent", LocalResourceFile), DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.GreenSuccess)
                     Else
-                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, String.Format(Localization.GetString("MessagesNotSent", LocalResourceFile), resultMsg), Skins.Controls.ModuleMessage.ModuleMessageType.RedError)
+                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, String.Format(Localization.GetString("MessagesNotSent", LocalResourceFile), resultMsg), DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.RedError)
                     End If
 
                 Case "m"
@@ -819,9 +819,9 @@ Namespace Connect.Modules.UserManagement.AccountManagement
 
                     Try
                         SendMessage(recipients, txtEmailSubjectAll.Text, txtEmailBodyAll.Content)
-                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, Localization.GetString("InternalMessageSent", LocalResourceFile), Skins.Controls.ModuleMessage.ModuleMessageType.GreenSuccess)
+                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, Localization.GetString("InternalMessageSent", LocalResourceFile), DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.GreenSuccess)
                     Catch ex As Exception
-                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, String.Format(Localization.GetString("InternalMessageNotSent", LocalResourceFile), ex.Message), Skins.Controls.ModuleMessage.ModuleMessageType.RedError)
+                        DotNetNuke.UI.Skins.Skin.AddModuleMessage(Me, String.Format(Localization.GetString("InternalMessageNotSent", LocalResourceFile), ex.Message), DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.RedError)
                     End Try
 
             End Select
