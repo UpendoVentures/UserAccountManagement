@@ -9,6 +9,21 @@
 
 	<h3>Release Notes</h3>
 	<p class="Owner">
+		<b>Version 01.04.01</b>
+	</p>
+	<p>Major Release</p>
+
+	<p><strong style="color: red;">IMPORTANT NOTE:</strong> This release was built and distributed by Will Strohl &amp; <a href="https://upendoventures.com/What/CMS/DNN" target="_blank">Upendo Ventures</a>. It's not an official release from or supported by Phillipp Becker. &nbsp;It is in no way owned by Will Strohl or Upendo Ventures.</p>
+	
+	<ul>
+		<li>Raised the minimum DNN version to 09.01.01.</li>
+		<li>IMPORTANT! Includes references to DotNetNuke.Web.Deprecated &amp; Telerik. This assumes you're on an upgraded instance of DNN.</li>
+		<li>Resolved bug experienced when attempting to unlock a locked user account.</li>
+		<li>Added debugging details when unlocking a user account (see Log4net log file).</li>
+		<li>Filtering search text to prevent security issues.</li>
+	</ul>
+
+	<p class="Owner">
 		<b>Version 01.04.00</b>
 	</p>
 	<p>Major Release</p>

@@ -2,7 +2,8 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <DnnVersion>08.00.03</DnnVersion>
+    <DnnVersion>09.01.01</DnnVersion>
+    <DeprecatedDnnVersion>08.00.03</DeprecatedDnnVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <IISExpressSSLPort />
@@ -67,6 +68,11 @@
       <HintPath>..\_References\DNN\$(DnnVersion)\DotNetNuke.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DotNetNuke.Instrumentation">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_References\DNN\$(DnnVersion)\DotNetNuke.Instrumentation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DotNetNuke.Web">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_References\DNN\$(DnnVersion)\DotNetNuke.Web.dll</HintPath>
@@ -74,7 +80,7 @@
     </Reference>
     <Reference Include="DotNetNuke.Web.Deprecated">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_References\DNN\$(DnnVersion)\DotNetNuke.Web.Deprecated.dll</HintPath>
+      <HintPath>..\_References\DNN\$(DeprecatedDnnVersion)\DotNetNuke.Web.Deprecated.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.WebControls">
@@ -124,12 +130,12 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Telerik.Web.UI">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_References\DNN\$(DnnVersion)\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\_References\DNN\$(DeprecatedDnnVersion)\Telerik.Web.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_References\DNN\$(DnnVersion)\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\_References\DNN\$(DeprecatedDnnVersion)\Telerik.Web.UI.Skins.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
