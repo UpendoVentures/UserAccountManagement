@@ -19,17 +19,18 @@
 '  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 '
 '***********************************************************************************
-Imports DotNetNuke.Entities.Modules
 Imports Connect.Libraries.UserManagement
-Imports DotNetNuke.Entities.Users
-Imports DotNetNuke.Security.Membership
 Imports Telerik.Web.UI
-Imports DotNetNuke.Security.Roles
-Imports DotNetNuke.Entities.Profile
-Imports DotNetNuke.Web.UI.WebControls
-Imports DotNetNuke.Entities.Portals
 Imports DotNetNuke.Common.Lists
+Imports DotNetNuke.Entities.Modules
+Imports DotNetNuke.Entities.Profile
+Imports DotNetNuke.Entities.Portals
+Imports DotNetNuke.Entities.Users
 Imports DotNetNuke.Framework.JavaScriptLibraries
+Imports DotNetNuke.Instrumentation
+Imports DotNetNuke.Security.Membership
+Imports DotNetNuke.Security.Roles
+Imports DotNetNuke.Web.UI.WebControls
 Imports System.Linq
 
 Namespace Connect.Modules.UserManagement.AccountManagement
@@ -37,6 +38,8 @@ Namespace Connect.Modules.UserManagement.AccountManagement
     Partial Class View
         Inherits ConnectUsersModuleBase
         Implements IActionable
+
+        Private Shared ReadOnly Logger As ILog = LoggerSource.Instance.GetLogger(GetType(View))
 
 #Region "Private Members"
 
@@ -466,10 +469,26 @@ Namespace Connect.Modules.UserManagement.AccountManagement
         End Sub
 
         Private Sub cmdUnlockAccount_Click(sender As Object, e As EventArgs) Handles cmdUnlockAccount.Click
-            Dim oUser As UserInfo = User
-            oUser.Membership.LockedOut = False
-            UserController.UpdateUser(PortalId, oUser)
-            BindUser(oUser.UserID)
+            Logger.Debug("Begin cmdUnlockAccount_Click()")
+
+            Try
+                Dim oUser As UserInfo = User
+
+                Logger.Debug("Begin UserController.UnLockUser()")
+                UserController.UnLockUser(oUser)
+                Logger.Debug("End UserController.UnLockUser()")
+
+                Logger.Debug("Binding User")
+                BindUser(oUser.UserID)
+                Logger.Debug("Binded User")
+
+                Logger.Debug("No exceptions occurred")
+            Catch ex As Exception
+                Logger.Error(ex.Message, ex)
+                Exceptions.ProcessModuleLoadException(Me, ex)
+            End Try
+
+            Logger.Debug("End cmdUnlockAccount_Click()")
         End Sub
 
         Private Sub cmdAuthorizeAccount_Click(sender As Object, e As EventArgs) Handles cmdAuthorizeAccount.Click
@@ -596,7 +615,9 @@ Namespace Connect.Modules.UserManagement.AccountManagement
 
         Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
 
-            If txtSearch.Text.Length > 0 Then
+            EnsureSafeSearchText()
+
+            If Not String.IsNullOrEmpty(txtSearch.Text.Trim) Then
 
                 'Session("Connect_UserSearchTerm") = txtSearch.Text
 
@@ -2319,14 +2340,19 @@ Namespace Connect.Modules.UserManagement.AccountManagement
 
         Private Sub SaveSearchOptions()
 
-            Dim strCols As String = ""
-            For Each item As ListItem In chkSearchCols.Items
-                If item.Selected = True Then
-                    strCols += item.Value & ","
-                End If
-            Next
+            Try
+                Dim strCols As String = String.Empty
+                For Each item As ListItem In chkSearchCols.Items
+                    If item.Selected = True Then
+                        strCols += item.Value & ","
+                    End If
+                Next
 
-            DotNetNuke.Services.Personalization.Personalization.SetProfile("dnnWerk_Users_ColOptions", "SearchCols_" & UserId.ToString, strCols)
+                Personalization.Personalization.SetProfile("dnnWerk_Users_ColOptions", "SearchCols_" & UserId.ToString, strCols)
+            Catch ex As Exception
+                Logger.Error(ex.Message, ex)
+                Throw ex
+            End Try
 
         End Sub
 
@@ -2529,6 +2555,8 @@ Namespace Connect.Modules.UserManagement.AccountManagement
                 '    txtSearch.Text = CType(Session("Connect_UserSearchTerm"), String)
                 'End If
 
+                EnsureSafeSearchText()
+
                 If txtSearch.Text.Length = 0 Then
                     grdUsers.MasterTableView.NoMasterRecordsText = "<p style='padding:10px;'>" & Localization.GetString("NoUsersFoundInRole", LocalResourceFile) & "</p>"
                 Else
@@ -2540,6 +2568,12 @@ Namespace Connect.Modules.UserManagement.AccountManagement
             End If
 
 
+        End Sub
+
+        Private Sub EnsureSafeSearchText()
+            Dim security As PortalSecurity = New PortalSecurity()
+            Dim searchText = security.InputFilter(txtSearch.Text.Trim, PortalSecurity.FilterFlag.NoMarkup)
+            txtSearch.Text = searchText
         End Sub
 
         Private Function GetUserList() As DataSet
@@ -2560,6 +2594,8 @@ Namespace Connect.Modules.UserManagement.AccountManagement
             cmdBulkRemove.Visible = (intRole <> -2 AndAlso intRole <> PortalSettings.RegisteredRoleId)
             cmdHardDeleteSelected.Visible = (intRole = -2 AndAlso AllowHardDelete)
 
+            EnsureSafeSearchText()
+
             If txtSearch.Text.Length > 0 Then
                 strSearch = txtSearch.Text
                 blnUseCache = False
@@ -2579,20 +2615,20 @@ Namespace Connect.Modules.UserManagement.AccountManagement
 
                 If String.IsNullOrEmpty(strSearch) Then
                     If intRole = PortalSettings.RegisteredRoleId Then
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_GetRegisteredUsers", intRole, PortalId)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_GetRegisteredUsers", intRole, PortalId)
                     ElseIf intRole = -1 Then
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_GetSuperUsers", intRole)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_GetSuperUsers", intRole)
                     ElseIf intRole = -2 Then
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_GetDeletedAccounts", intRole, PortalId)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_GetDeletedAccounts", intRole, PortalId)
                     ElseIf intRole = -3 Then
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_GetUnAuthAccounts", intRole, PortalId)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_GetUnAuthAccounts", intRole, PortalId)
                     Else
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_GetRoleMembers", intRole, PortalId)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_GetRoleMembers", intRole, PortalId)
                     End If
                     dt.Load(dr)
                 Else
 
-                    Dim strCols As String = ""
+                    Dim strCols As String = String.Empty
                     For Each item As ListItem In chkSearchCols.Items
                         If item.Selected = True Then
                             strCols += item.Value & ","
@@ -2600,11 +2636,11 @@ Namespace Connect.Modules.UserManagement.AccountManagement
                     Next
 
                     If intRole = PortalSettings.RegisteredRoleId Then
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_SearchRegisteredUsers", intRole, PortalId, strSearch, strCols)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_SearchRegisteredUsers", intRole, PortalId, strSearch, strCols)
                     ElseIf intRole = -2 Then
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_SearchDeletedUsers", intRole, PortalId, strSearch, strCols)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_SearchDeletedUsers", intRole, PortalId, strSearch, strCols)
                     Else
-                        dr = DotNetNuke.Data.DataProvider.Instance().ExecuteReader("Connect_Accounts_SearchRoleMembers", intRole, strSearch, strCols)
+                        dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_SearchRoleMembers", intRole, strSearch, strCols)
                     End If
                     dt.Load(dr)
 
