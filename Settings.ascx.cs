@@ -33,7 +33,6 @@ namespace Connect.Modules.UserManagement.AccountManagement
 {
     public partial class Settings : DotNetNuke.Entities.Modules.ModuleSettingsBase
     {
-
         /* TODO ERROR: Skipped RegionDirectiveTrivia */
         public override void LoadSettings()
         {

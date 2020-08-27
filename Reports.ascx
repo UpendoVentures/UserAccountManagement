@@ -1,9 +1,6 @@
-<%@ Control Language="vb" AutoEventWireup="false" Inherits="Connect.Modules.UserManagement.AccountManagement.Reports" Codebehind="Reports.ascx.vb" %>
+<%@ Control Language="vb" AutoEventWireup="true" Inherits="Connect.Modules.UserManagement.AccountManagement.Reports" Codebehind="Reports.ascx.cs" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
-
-
-
                         
 <asp:Repeater ID="rptReports" runat="server">
     <HeaderTemplate><table style="width:100%"></HeaderTemplate>

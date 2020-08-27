@@ -13,7 +13,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports._cmdNewReport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports.cmdNewReport">
             <summary>
             cmdNewReport control.
             </summary>
@@ -22,7 +22,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports._cmdBack">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports.cmdBack">
             <summary>
             cmdBack control.
             </summary>
@@ -76,7 +76,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports._cmdAddReport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports.cmdAddReport">
             <summary>
             cmdAddReport control.
             </summary>
@@ -85,7 +85,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports._cmdUpdateReport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports.cmdUpdateReport">
             <summary>
             cmdUpdateReport control.
             </summary>
@@ -94,7 +94,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports._cmdDeleteReport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports.cmdDeleteReport">
             <summary>
             cmdDeleteReport control.
             </summary>
@@ -103,7 +103,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports._cmdCancelReport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Reports.cmdCancelReport">
             <summary>
             cmdCancelReport control.
             </summary>
@@ -121,7 +121,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates._drpThemes">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates.drpThemes">
             <summary>
             drpThemes control.
             </summary>
@@ -130,7 +130,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates._cmdCopySelected">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates.cmdCopySelected">
             <summary>
             cmdCopySelected control.
             </summary>
@@ -139,7 +139,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates._cmdDeleteSelected">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates.cmdDeleteSelected">
             <summary>
             cmdDeleteSelected control.
             </summary>
@@ -166,7 +166,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates._drpLocales">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates.drpLocales">
             <summary>
             drpLocales control.
             </summary>
@@ -391,7 +391,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates._cmdUpdate">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates.cmdUpdate">
             <summary>
             cmdUpdate control.
             </summary>
@@ -400,7 +400,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates._cmdUpdateExit">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates.cmdUpdateExit">
             <summary>
             cmdUpdateExit control.
             </summary>
@@ -409,7 +409,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates._cmdCancel">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Templates.cmdCancel">
             <summary>
             cmdCancel control.
             </summary>
@@ -499,7 +499,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Settings._chkAllowExport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Settings.chkAllowExport">
             <summary>
             chkAllowExport control.
             </summary>
@@ -562,7 +562,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.Settings._chkAllowedRoles">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.Settings.chkAllowedRoles">
             <summary>
             chkAllowedRoles control.
             </summary>
@@ -670,7 +670,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdCreateAccount">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdCreateAccount">
             <summary>
             cmdCreateAccount control.
             </summary>
@@ -688,7 +688,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdBack">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdBack">
             <summary>
             cmdBack control.
             </summary>
@@ -715,7 +715,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnSearch">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnSearch">
             <summary>
             btnSearch control.
             </summary>
@@ -742,7 +742,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnHardDelete">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnHardDelete">
             <summary>
             btnHardDelete control.
             </summary>
@@ -760,7 +760,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnExport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnExport">
             <summary>
             btnExport control.
             </summary>
@@ -805,7 +805,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnReport">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnReport">
             <summary>
             btnReport control.
             </summary>
@@ -850,7 +850,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._grdUsers">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.grdUsers">
             <summary>
             grdUsers control.
             </summary>
@@ -859,7 +859,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdBulkDelete">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdBulkDelete">
             <summary>
             cmdBulkDelete control.
             </summary>
@@ -868,7 +868,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdBulkRemove">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdBulkRemove">
             <summary>
             cmdBulkRemove control.
             </summary>
@@ -877,7 +877,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdHardDeleteSelected">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdHardDeleteSelected">
             <summary>
             cmdHardDeleteSelected control.
             </summary>
@@ -940,7 +940,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnApplyOptions">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnApplyOptions">
             <summary>
             btnApplyOptions control.
             </summary>
@@ -1291,7 +1291,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdUpdateAccount">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdUpdateAccount">
             <summary>
             cmdUpdateAccount control.
             </summary>
@@ -1300,7 +1300,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdUnlockAccount">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdUnlockAccount">
             <summary>
             cmdUnlockAccount control.
             </summary>
@@ -1309,7 +1309,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdAuthorizeAccount">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdAuthorizeAccount">
             <summary>
             cmdAuthorizeAccount control.
             </summary>
@@ -1318,7 +1318,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdForcePasswordChange">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdForcePasswordChange">
             <summary>
             cmdForcePasswordChange control.
             </summary>
@@ -1327,7 +1327,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdDeleteAccount">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdDeleteAccount">
             <summary>
             cmdDeleteAccount control.
             </summary>
@@ -1336,7 +1336,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdRestoreAccount">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdRestoreAccount">
             <summary>
             cmdRestoreAccount control.
             </summary>
@@ -1372,7 +1372,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdResetPasswordLink">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdResetPasswordLink">
             <summary>
             cmdResetPasswordLink control.
             </summary>
@@ -1426,7 +1426,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdUpdatePassword">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdUpdatePassword">
             <summary>
             cmdUpdatePassword control.
             </summary>
@@ -1462,7 +1462,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnNotifyPassword">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnNotifyPassword">
             <summary>
             btnNotifyPassword control.
             </summary>
@@ -1471,7 +1471,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnNotifyPasswordSkip">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnNotifyPasswordSkip">
             <summary>
             btnNotifyPasswordSkip control.
             </summary>
@@ -1507,7 +1507,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdUpdateProfile">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdUpdateProfile">
             <summary>
             cmdUpdateProfile control.
             </summary>
@@ -1570,7 +1570,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnAddToRole">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnAddToRole">
             <summary>
             btnAddToRole control.
             </summary>
@@ -1579,7 +1579,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._grdUserRoles">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.grdUserRoles">
             <summary>
             grdUserRoles control.
             </summary>
@@ -1615,7 +1615,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnNotifyRole">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnNotifyRole">
             <summary>
             btnNotifyRole control.
             </summary>
@@ -1624,7 +1624,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnNotifyRoleSkip">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnNotifyRoleSkip">
             <summary>
             btnNotifyRoleSkip control.
             </summary>
@@ -1669,7 +1669,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnNotifyUser">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnNotifyUser">
             <summary>
             btnNotifyUser control.
             </summary>
@@ -1732,7 +1732,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnSendMessage">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnSendMessage">
             <summary>
             btnSendMessage control.
             </summary>
@@ -1768,7 +1768,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdUpdateSites">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdUpdateSites">
             <summary>
             cmdUpdateSites control.
             </summary>
@@ -1813,7 +1813,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdAddAccount">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdAddAccount">
             <summary>
             cmdAddAccount control.
             </summary>
@@ -1822,7 +1822,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._cmdCancelCreate">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.cmdCancelCreate">
             <summary>
             cmdCancelCreate control.
             </summary>
@@ -1894,7 +1894,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnSendMessages">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnSendMessages">
             <summary>
             btnSendMessages control.
             </summary>
@@ -1903,7 +1903,7 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
-        <member name="F:Connect.Modules.UserManagement.AccountManagement.View._btnCancelMessaging">
+        <member name="F:Connect.Modules.UserManagement.AccountManagement.View.btnCancelMessaging">
             <summary>
             btnCancelMessaging control.
             </summary>

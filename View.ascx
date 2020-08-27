@@ -1,4 +1,5 @@
-<%@ Control Language="vb" AutoEventWireup="false" Inherits="Connect.Modules.UserManagement.AccountManagement.View" Codebehind="View.ascx.vb" %>
+<%@ Control Language="c#" AutoEventWireup="true" Inherits="Connect.Modules.UserManagement.AccountManagement.View" Codebehind="View.ascx.cs" %>
+<%@ Import Namespace="DotNetNuke.Services.Localization" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke.Web.Deprecated" Namespace="DotNetNuke.Web.UI.WebControls" %>
@@ -11,8 +12,7 @@
 
     <asp:Panel ID="pnlSuccess" runat="server" CssClass="dnnFormMessage dnnFormSuccess" Visible="false">
         <asp:Literal id="lblSucess" runat="server"></asp:Literal>
-    </asp:Panel>     
-         
+    </asp:Panel>         
 
     <div class="connect_leftcol dnnLeft">
 
@@ -559,7 +559,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
                     window.location.href = url;
                 }
             },
@@ -569,7 +569,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
                     window.location.href = url;
                 }
             },
@@ -596,7 +596,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
                     window.location.href = url;
                 }
             },
@@ -606,7 +606,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
                     window.location.href = url;
                 }
             },
@@ -633,7 +633,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
                     window.location.href = url;
                 }
             },
@@ -663,7 +663,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
                     window.location.href = url;
                 }
             },
@@ -693,7 +693,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
                     window.location.href = url;
                 }
             },
@@ -774,7 +774,7 @@
                 var uidval = $(this).data("uid");
                 var actionval = $(this).data("action");
                 var roleidval = $(this).data("roleid");
-                var url = '<%= NavigateUrl(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
+                var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
                 window.location.href = url;
             });
 
@@ -782,7 +782,7 @@
                 var uidval = $(this).data("uid");
                 var actionval = $(this).data("action");
                 var roleidval = $(this).data("roleid");
-                var url = '<%= NavigateUrl(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
+                var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
                 window.location.href = url;
             });  
             
