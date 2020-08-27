@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="Connect AccountManagement" type="Module" version="01.04.01">
+    <package name="Connect AccountManagement" type="Module" version="02.00.00">
       <friendlyName>Connect: AccountManagement</friendlyName>
       <description>A community module that handles account management in DNN</description>
       <iconFile>Desktopmodules/Connect/AccountManagement/Images/icnModule.png</iconFile>
@@ -15,7 +15,7 @@
       <azureCompatible>true</azureCompatible>
 
       <dependencies>
-        <dependency type="CoreVersion">09.01.01</dependency>
+        <dependency type="CoreVersion">09.02.02</dependency>
       </dependencies>
 
       <components>
@@ -41,7 +41,7 @@
             <script type="UnInstall">
               <path>Providers\DataProviders\SqlDataProvider</path>
               <name>Uninstall.SqlDataProvider</name>
-              <version>01.04.01</version>
+              <version>02.00.00</version>
             </script>
           </scripts>
         </component>
@@ -59,7 +59,7 @@
           <desktopModule>
             <moduleName>Connect AccountManagement</moduleName>
             <foldername>AccountManagement</foldername>
-            <businessControllerClass></businessControllerClass>
+            <businessControllerClass>Connect.Modules.UserManagement.AccountManagement.Components.FeatureController, Connect.Modules.AccountManagement</businessControllerClass>
             <supportedFeatures />
             <moduleDefinitions>
               <moduleDefinition>
@@ -110,18 +110,27 @@
               </moduleDefinition>
             </moduleDefinitions>
           </desktopModule>
+          <eventMessage>
+            <processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+            <processorCommand>UpgradeModule</processorCommand>
+            <attributes>
+              <businessControllerClass>Connect.Modules.UserManagement.AccountManagement.Components.FeatureController, Connect.Modules.AccountManagement</businessControllerClass>
+              <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+              <upgradeVersionsList>02.00.00</upgradeVersionsList>
+            </attributes>
+          </eventMessage>
         </component>
           
         <component type="Assembly">
           <assemblies>
             <assembly>
               <name>Connect.Modules.AccountManagement.dll</name>
-              <version>01.04.01</version>
+              <version>02.00.00</version>
               <path>bin</path>
             </assembly>            
             <assembly>
               <name>Connect.Libraries.UserManagement.dll</name>
-              <version>01.04.01</version>
+              <version>02.00.00</version>
               <path>bin</path>
             </assembly>              
           </assemblies>
