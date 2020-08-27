@@ -50,19 +50,19 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void cmdNewReport_Click(object sender, EventArgs e)
+        protected void cmdNewReport_Click(object sender, EventArgs e)
         {
             BindEditForm(Null.NullInteger);
         }
 
-        private void cmdAddReport_Click(object sender, EventArgs e)
+        protected void cmdAddReport_Click(object sender, EventArgs e)
         {
             AddReport();
             pnlReportForm.Visible = false;
             BindReports();
         }
 
-        private void cmdUpdateReport_Click(object sender, EventArgs e)
+        protected void cmdUpdateReport_Click(object sender, EventArgs e)
         {
             int ReportId = Convert.ToInt32(cmdUpdateReport.CommandArgument);
             UpdateReport(ReportId);
@@ -70,40 +70,38 @@ namespace Connect.Modules.UserManagement.AccountManagement
             BindReports();
         }
 
-        private void cmdCancelReport_Click(object sender, EventArgs e)
+        protected void cmdCancelReport_Click(object sender, EventArgs e)
         {
             pnlReportForm.Visible = false;
-            txtReportName.Text = "";
-            txtReportSql.Text = "";
+            txtReportName.Text = string.Empty;
+            txtReportSql.Text = string.Empty;
         }
 
-        private void cmdDeleteReport_Click(object sender, EventArgs e)
+        protected void cmdDeleteReport_Click(object sender, EventArgs e)
         {
             int ReportId = Convert.ToInt32(cmdDeleteReport.CommandArgument);
             UserReportsController.DeleteReport(ReportId);
             BindReports();
         }
 
-        public void cmdEditReportFromList_Click(object sender, EventArgs e)
+        protected void cmdEditReportFromList_Click(object sender, EventArgs e)
         {
             int ReportId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
             BindEditForm(ReportId);
         }
 
-        public void cmdDeleteReportFromList_Click(object sender, EventArgs e)
+        protected void cmdDeleteReportFromList_Click(object sender, EventArgs e)
         {
             int ReportId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
             UserReportsController.DeleteReport(ReportId);
             BindReports();
         }
 
-        private void cmdBack_Click(object sender, EventArgs e)
+        protected void cmdBack_Click(object sender, EventArgs e)
         {
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId));
         }
 
-
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
         private void AddReport()
         {
             var objReport = new UserReportInfo();
@@ -117,7 +115,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
         private void UpdateReport(int ReportId)
         {
             var objReport = UserReportsController.GetReport(ReportId);
-            if (objReport is object)
+            if (objReport != null)
             {
                 objReport.Sql = txtReportSql.Text;
                 objReport.FriendlyName = txtReportName.Text;
@@ -136,15 +134,15 @@ namespace Connect.Modules.UserManagement.AccountManagement
         private void BindEditForm(int ReportId)
         {
             pnlReportForm.Visible = true;
-            txtReportName.Text = "";
-            txtReportSql.Text = "";
+            txtReportName.Text = string.Empty;
+            txtReportSql.Text = string.Empty;
             cmdUpdateReport.Visible = false;
             cmdDeleteReport.Visible = false;
             cmdAddReport.Visible = true;
             if (ReportId != Null.NullInteger)
             {
                 var objReport = UserReportsController.GetReport(ReportId);
-                if (objReport is object)
+                if (objReport != null)
                 {
                     txtReportName.Text = objReport.FriendlyName;
                     txtReportSql.Text = objReport.Sql;
@@ -156,7 +154,5 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 }
             }
         }
-
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
     }
 }

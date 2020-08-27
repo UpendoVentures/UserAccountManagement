@@ -17,17 +17,17 @@
     <div class="connect_leftcol dnnLeft">
 
         <asp:Panel ID="pnlCreateAccount" runat="server" CssClass="connect_btnContainer">
-            <asp:LinkButton ID="cmdCreateAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdCreateAccount"></asp:LinkButton>
+            <asp:LinkButton ID="cmdCreateAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdCreateAccount" OnClick="cmdCreateAccount_Click" />
         </asp:Panel>
 
         <asp:Panel ID="pnlBackToList" runat="server" CssClass="connect_btnContainer">
-            <asp:LinkButton ID="cmdBack" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdBack"></asp:LinkButton>
+            <asp:LinkButton ID="cmdBack" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdBack" OnClick="cmdBack_Click" />
         </asp:Panel>
 
         <asp:Panel ID="pnlSearch" runat="server" CssClass="connect_btnContainer">
             <div class="dnnClear">
                 <div class="connect_searchbox dnnLeft"><asp:TextBox ID="txtSearch" runat="server"></asp:TextBox></div>
-                <div class="connect_searchbutton dnnLeft"><asp:LinkButton id="btnSearch" runat="server"></asp:LinkButton></div>
+                <div class="connect_searchbutton dnnLeft"><asp:LinkButton id="btnSearch" runat="server" OnClick="btnSearch_Click" /></div>
             </div>
         </asp:Panel>
 
@@ -36,11 +36,11 @@
         </div>
 
         <asp:Panel ID="pnlHardDelete" runat="server" CssClass="connect_btnContainer">
-            <asp:Linkbutton ID="btnHardDelete" runat="server" cssClass="dnnSecondaryAction" Visible="false" />
+            <asp:Linkbutton ID="btnHardDelete" runat="server" cssClass="dnnSecondaryAction" Visible="false" OnClick="btnHardDelete_Click" />
         </asp:Panel>
 
         <asp:Panel ID="pnlExport" runat="server" CssClass="connect_btnContainer">
-            <asp:Linkbutton ID="btnExport" runat="server" CssClass="dnnSecondaryAction" />
+            <asp:Linkbutton ID="btnExport" runat="server" CssClass="dnnSecondaryAction" OnClick="btnExport_Click" />
         </asp:Panel>
 
         <asp:Panel ID="pnlMessageUsers" runat="server" CssClass="connect_btnContainer">
@@ -49,7 +49,7 @@
 
         <asp:Panel ID="pnlReport" runat="server" CssClass="connect_btnContainer">
             <div class="connect_drpContainer dnnFormItem"><asp:DropDownList ID="drpReports" runat="server"></asp:DropDownList></div>
-            <asp:Linkbutton ID="btnReport" runat="server" Text="Run Report" CssClass="dnnSecondaryAction" />
+            <asp:Linkbutton ID="btnReport" runat="server" Text="Run Report" CssClass="dnnSecondaryAction" OnClick="btnReport_Click" />
         </asp:Panel>
 
     </div>
@@ -67,7 +67,7 @@
 
                 <div id="dvGrid">
                     
-                    <dnn:dnngrid id="grdUsers" runat="server" ScreenRowNumber="2000" AllowMultiRowSelection="True">
+                    <dnn:dnngrid id="grdUsers" runat="server" ScreenRowNumber="2000" AllowMultiRowSelection="True" OnPreRender="grdUsers_PreRender" OnNeedDataSource="grdUsers_NeedDataSource" OnDataBound="grdUsers_ItemDataBound">
                         <MasterTableView AutoGenerateColumns="false" DataKeyNames="UserId" AllowSorting="true">
                             <Columns>
                                 <dnn:dnnGridClientSelectColumn Visible="true"></dnn:dnnGridClientSelectColumn>
@@ -89,7 +89,7 @@
                                     <ItemTemplate>
                                         <ul class="connect-gridactions dnnClear">
                                             <li runat="server" id="btnSetStatus">
-                                                <a href="#" class='connect-gridbutton <%# IIf(Databinder.Eval(Container.DataItem, "Status") = "-1", "cmdApprove", "cmdPending") %>' data-uid='<%# Databinder.Eval(Container.DataItem, "UserId") %>' data-action='<%# IIf(Databinder.Eval(Container.DataItem, "Status") = "-1", "approve", "pending") %>' data-roleid='<%# Request.QueryString("RoleId")%>' title='<%# IIf(DataBinder.Eval(Container.DataItem, "Status") = "-1", Localization.GetString("SetAccountApproved", LocalResourceFile), Localization.GetString("SetAccountPending", LocalResourceFile))%>'><i class='<%# IIf(DataBinder.Eval(Container.DataItem, "Status") = "-1", "connectaccounts-hourglass1", "connectaccounts-check30")%>'></i></a>
+                                                <a href="#" class='connect-gridbutton <%# (Databinder.Eval(Container.DataItem, "Status") == "-1" ? "cmdApprove" : "cmdPending") %>' data-uid='<%# Databinder.Eval(Container.DataItem, "UserId") %>' data-action='<%# (Databinder.Eval(Container.DataItem, "Status") == "-1" ? "approve" : "pending") %>' data-roleid='<%# Request.QueryString("RoleId")%>' title='<%# (DataBinder.Eval(Container.DataItem, "Status") == "-1" ? Localization.GetString("SetAccountApproved", LocalResourceFile) : Localization.GetString("SetAccountPending", LocalResourceFile))%>'><i class='<%# (DataBinder.Eval(Container.DataItem, "Status") == "-1" ? "connectaccounts-hourglass1" : "connectaccounts-check30")%>'></i></a>
                                             </li>
                                         </ul>
                                     </ItemTemplate>
@@ -126,9 +126,9 @@
                     </dnn:dnngrid>
                     
                     <ul class="dnnActions dnnClear">
-                        <li><asp:LinkButton ID="cmdBulkDelete" runat="server" CssClass="dnnSecondaryAction"></asp:LinkButton></li>
-                        <li><asp:LinkButton ID="cmdBulkRemove" runat="server" CssClass="dnnSecondaryAction"></asp:LinkButton></li>
-                        <li><asp:LinkButton ID="cmdHardDeleteSelected" runat="server" CssClass="dnnSecondaryAction"></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="cmdBulkDelete" runat="server" CssClass="dnnSecondaryAction" OnClick="cmdBulkDelete_Click" /></li>
+                        <li><asp:LinkButton ID="cmdBulkRemove" runat="server" CssClass="dnnSecondaryAction" OnClick="cmdBulkRemove_Click" /></li>
+                        <li><asp:LinkButton ID="cmdHardDeleteSelected" runat="server" CssClass="dnnSecondaryAction" OnClick="cmdHardDeleteSelected_Click" /></li>
                     </ul> 
 
                 </div>
@@ -179,7 +179,7 @@
 
                     <div class="dnnClear">
                         <ul class="dnnActions">
-                            <li><asp:Linkbutton ID="btnApplyOptions" runat="server" CssClass="dnnPrimaryAction" /></li>
+                            <li><asp:Linkbutton ID="btnApplyOptions" runat="server" CssClass="dnnPrimaryAction" OnClick="btnApplyOptions_Click" /></li>
                         </ul>
                     </div>
                     
@@ -263,12 +263,12 @@
                     </div>
 
                     <ul class="dnnActions">
-                        <li><asp:LinkButton ID="cmdUpdateAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdateAccount"></asp:LinkButton></li>
-                        <li><asp:LinkButton ID="cmdUnlockAccount" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdUnlockAccount"></asp:LinkButton></li>
-                        <li><asp:LinkButton ID="cmdAuthorizeAccount" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdAuthorizeAccount"></asp:LinkButton></li>
-                        <li><asp:LinkButton ID="cmdForcePasswordChange" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdForcePasswordChange"></asp:LinkButton></li>                        
-                        <li><asp:LinkButton ID="cmdDeleteAccount" runat="server" CssClass="dnnSecondaryAction"></asp:LinkButton></li>
-                        <li><asp:LinkButton ID="cmdRestoreAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdRestoreAccount"></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="cmdUpdateAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdateAccount" OnClick="cmdUpdateAccount_Click" /></li>
+                        <li><asp:LinkButton ID="cmdUnlockAccount" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdUnlockAccount" OnClick="cmdUnlockAccount_Click" /></li>
+                        <li><asp:LinkButton ID="cmdAuthorizeAccount" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdAuthorizeAccount" OnClick="cmdAuthorizeAccount_Click" /></li>
+                        <li><asp:LinkButton ID="cmdForcePasswordChange" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdForcePasswordChange" OnClick="cmdForcePasswordChange_Click" /></li>                        
+                        <li><asp:LinkButton ID="cmdDeleteAccount" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmsDeleteAccount" OnClick="cmdDeleteAccount_Click" /></li>
+                        <li><asp:LinkButton ID="cmdRestoreAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdRestoreAccount" OnClick="cmdRestoreAccount_Click" /></li>
                     </ul>
 
                     </asp:Panel>
@@ -280,7 +280,7 @@
                         <p class="connect_note"><asp:Literal ID="lblPasswordNote" runat="server"></asp:Literal></p>
 
                         <asp:Panel ID="pnlResetButton" runat="server">
-                            <asp:LinkButton ID="cmdResetPasswordLink" runat="server" resourcekey="ResetPasswordLink" CssClass="dnnPrimaryAction"></asp:LinkButton>
+                            <asp:LinkButton ID="cmdResetPasswordLink" runat="server" resourcekey="ResetPasswordLink" CssClass="dnnPrimaryAction" OnClick="cmdResetPasswordLink_Click" />
                         </asp:Panel>
 
                         <asp:Panel ID="pnlPassword_Step1" runat="server">
@@ -300,7 +300,7 @@
                             </div>
 
                             <ul class="dnnActions">
-                                <li><asp:LinkButton ID="cmdUpdatePassword" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdatePassword"></asp:LinkButton></li>
+                                <li><asp:LinkButton ID="cmdUpdatePassword" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdatePassword" OnClick="cmdUpdatePassword_Click" /></li>
                             </ul>
 
                         </asp:Panel>
@@ -316,8 +316,8 @@
                             </div>
                                   
                             <ul class="dnnActions">
-                                <li><asp:Button ID="btnNotifyPassword" runat="server" CssClass="dnnPrimaryAction" /></li>
-                                <li><asp:Button ID="btnNotifyPasswordSkip" runat="server" CssClass="dnnSecondaryAction" /></li>
+                                <li><asp:Button ID="btnNotifyPassword" runat="server" CssClass="dnnPrimaryAction" OnClick="btnNotifyPassword_Click" /></li>
+                                <li><asp:Button ID="btnNotifyPasswordSkip" runat="server" CssClass="dnnSecondaryAction" OnClick="btnNotifyPasswordSkip_Click" /></li>
                             </ul>
                                                                 
                         </asp:Panel> 
@@ -333,7 +333,7 @@
                     <asp:PlaceHolder ID="plhProfile" runat="server"></asp:PlaceHolder>
 
                     <ul class="dnnActions">
-                        <li><asp:LinkButton ID="cmdUpdateProfile" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdateProfile"></asp:LinkButton></li>
+                        <li><asp:LinkButton ID="cmdUpdateProfile" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdateProfile" OnClick="cmdUpdateProfile_Click" /></li>
                     </ul>
 
                     </asp:Panel>
@@ -342,23 +342,23 @@
                 <div id="dvRoles" class="dnnClear">
                     <asp:Panel ID="pnlRolesTab" runat="server">
 
-                        <p class="connect_note"><asp:Literal ID="lblRolesNote" runat="server"></asp:Literal></p>
+                        <p class="connect_note"><asp:Literal ID="lblRolesNote" runat="server" /></p>
 
                         <asp:Panel ID="pnlRoleChange_Step1" runat="server" Visible="true">
                             <div>
                                 
                                 <table cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td style="padding-bottom:20px;padding-right:25px;vertical-align:top;"><dnn:DNNComboBox ID="drpRoles" runat="server" Width="180px" AllowCustomText="true"></dnn:DNNComboBox></td>
-                                        <td style="padding-bottom:20px;padding-right:5px;vertical-align:top;"><dnn:DNNDatePicker ID="ctlRoleDatFrom" runat="server"></dnn:DNNDatePicker></td>
-                                        <td style="padding-bottom:20px;padding-right:5px;vertical-align:top;"><dnn:DNNDatePicker ID="ctlRoleDateTo" runat="server"></dnn:DNNDatePicker></td>
-                                        <td style="padding-bottom:20px;padding-right:5px;vertical-align:top;"><asp:Button ID="btnAddToRole" runat="server" CssClass="dnnPrimaryAction" /></td>
+                                        <td style="padding-bottom:20px;padding-right:25px;vertical-align:top;"><dnn:DNNComboBox ID="drpRoles" runat="server" Width="180px" AllowCustomText="true" /></td>
+                                        <td style="padding-bottom:20px;padding-right:5px;vertical-align:top;"><dnn:DNNDatePicker ID="ctlRoleDatFrom" runat="server" /></td>
+                                        <td style="padding-bottom:20px;padding-right:5px;vertical-align:top;"><dnn:DNNDatePicker ID="ctlRoleDateTo" runat="server" /></td>
+                                        <td style="padding-bottom:20px;padding-right:5px;vertical-align:top;"><asp:Button ID="btnAddToRole" runat="server" CssClass="dnnPrimaryAction" OnClick="btnAddToRole_Click" /></td>
                                     </tr>
                                 </table>
                                 
                             </div>
                             
-                            <dnn:dnnGrid ID="grdUserRoles" runat="server">
+                            <dnn:dnnGrid ID="grdUserRoles" runat="server" OnNeedDataSource="grdUserRoles_NeedDataSource" OnDataBound="grdUserRoles_ItemDataBound">
                                 <MasterTableView DataKeyNames="RoleId" AutoGenerateColumns="false">
                                     <Columns>
                                         <dnn:dnnGridBoundColumn HeaderText="RoleName" DataField="RoleName" UniqueName="col_RoleName"></dnn:dnnGridBoundColumn>
@@ -393,8 +393,8 @@
                             
                             
                             <ul class="dnnActions">
-                                <li><asp:Button ID="btnNotifyRole" runat="server" Visible="true" CssClass="dnnPrimaryAction" /></li>
-                                <li><asp:Button ID="btnNotifyRoleSkip" runat="server" Visible="true" CssClass="dnnSecondaryAction" /></li>
+                                <li><asp:Button ID="btnNotifyRole" runat="server" Visible="true" CssClass="dnnPrimaryAction" OnClick="btnNotifyRole_Click" /></li>
+                                <li><asp:Button ID="btnNotifyRoleSkip" runat="server" Visible="true" CssClass="dnnSecondaryAction" OnClick="btnNotifyRoleSkip_Click" /></li>
                             </ul>
                                                                     
                         </asp:Panel> 
@@ -416,7 +416,7 @@
                         </div>
                             
                         <ul class="dnnActions">
-                            <li><asp:Button ID="btnNotifyUser" runat="server" Visible="true" CssClass="dnnPrimaryAction" /></li>
+                            <li><asp:Button ID="btnNotifyUser" runat="server" Visible="true" CssClass="dnnPrimaryAction" OnClick="btnNotifyUser_Click" /></li>
                         </ul>
 
                     </asp:Panel>
@@ -438,7 +438,7 @@
                         </div>
                             
                         <ul class="dnnActions">
-                            <li><asp:Button ID="btnSendMessage" runat="server" Visible="true" resourcekey="btnSendMessage" CssClass="dnnPrimaryAction" /></li>
+                            <li><asp:Button ID="btnSendMessage" runat="server" Visible="true" resourcekey="btnSendMessage" CssClass="dnnPrimaryAction" OnClick="btnSendMessage_Click" /></li>
                         </ul>
 
                     </asp:Panel>
@@ -454,7 +454,7 @@
                     </div>
 
                     <ul class="dnnActions">
-                        <li><asp:Linkbutton ID="cmdUpdateSites" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdateSites" /></li>
+                        <li><asp:Linkbutton ID="cmdUpdateSites" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdUpdateSites" OnClick="cmdUpdateSites_Click" /></li>
                     </ul>                                
 
 
@@ -476,8 +476,8 @@
             </div>
 
             <ul class="dnnActions">
-                <li><asp:LinkButton ID="cmdAddAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdAddAccount"></asp:LinkButton></li>
-                <li><asp:LinkButton ID="cmdCancelCreate" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdCancelCreate"></asp:LinkButton></li>
+                <li><asp:LinkButton ID="cmdAddAccount" runat="server" CssClass="dnnPrimaryAction" resourcekey="cmdAddAccount" OnClick="cmdAddAccount_Click" /></li>
+                <li><asp:LinkButton ID="cmdCancelCreate" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdCancelCreate" OnClick="cmdCancelCreate_Click" /></li>
             </ul>
 
         </asp:Panel>
@@ -510,8 +510,8 @@
             </div>
 
             <ul class="dnnActions">
-                <li><asp:Button ID="btnSendMessages" runat="server" resourcekey="btnSendMessages" CssClass="dnnPrimaryAction" /></li>
-                <li><asp:Button ID="btnCancelMessaging" runat="server" resourcekey="btnCancelMessaging" CssClass="dnnSecondaryAction" /></li>
+                <li><asp:Button ID="btnSendMessages" runat="server" resourcekey="btnSendMessages" CssClass="dnnPrimaryAction" OnClick="btnSendMessages_Click" /></li>
+                <li><asp:Button ID="btnCancelMessaging" runat="server" resourcekey="btnCancelMessaging" CssClass="dnnSecondaryAction" OnClick="btnCancelMessaging_Click" /></li>
             </ul>
 
         </asp:Panel>
@@ -558,8 +558,8 @@
                     $(this).dialog("close");
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
-                    var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
+                    var roleid = <%=Request.QueryString["RoleId"] %>;
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
                     window.location.href = url;
                 }
             },
@@ -569,7 +569,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
                     window.location.href = url;
                 }
             },
@@ -596,7 +596,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=1") %>#dvRoles';
                     window.location.href = url;
                 }
             },
@@ -606,7 +606,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '", "Notify=0") %>';
                     window.location.href = url;
                 }
             },
@@ -633,7 +633,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
                     window.location.href = url;
                 }
             },
@@ -663,7 +663,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
                     window.location.href = url;
                 }
             },
@@ -693,7 +693,7 @@
                     var uid = $(this).dialog("option", "uid");
                     var action = $(this).dialog("option", "action");
                     var roleid = <%= Request.QueryString("RoleId") %>;
-                    var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
+                    var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uid + '", "RoleId=' + roleid + '", "Action=' + action + '")%>';
                     window.location.href = url;
                 }
             },
@@ -774,7 +774,7 @@
                 var uidval = $(this).data("uid");
                 var actionval = $(this).data("action");
                 var roleidval = $(this).data("roleid");
-                var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
+                var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
                 window.location.href = url;
             });
 
@@ -782,7 +782,7 @@
                 var uidval = $(this).data("uid");
                 var actionval = $(this).data("action");
                 var roleidval = $(this).data("roleid");
-                var url = '<%= DotNetNuke.Common.Globals.NavigateUrl(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
+                var url = '<%= DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=' + uidval + '", "RoleId=' + roleidval + '", "Action=' + actionval + '")%>';
                 window.location.href = url;
             });  
             
@@ -838,6 +838,3 @@
 
     }(jQuery, window.Sys));
 </script>
-
-
-

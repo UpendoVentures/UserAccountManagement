@@ -24,7 +24,7 @@
 
 <div class="dnnFormItem">
     <dnn:Label ID="lblAllowExport" runat="server" resourcekey="lblAllowExport" />
-    <asp:CheckBox ID="chkAllowExport" runat="server" AutoPostBack="true" />
+    <asp:CheckBox ID="chkAllowExport" runat="server" AutoPostBack="true" OnCheckedChanged="chkAllowExport_CheckedChanged" />
 </div>
 
 <div class="dnnFormItem" runat="server" id="dvExportFields">
@@ -39,7 +39,7 @@
 
 <div class="dnnFormItem">
     <dnn:Label ID="lblAllowedRoles" runat="server" resourcekey="lblAllowedRoles" />
-    <asp:CheckBoxList ID="chkAllowedRoles" runat="server" RepeatColumns="2" DataTextField="RoleName" DataValueField="RoleId" AutoPostBack="true" />
+    <asp:CheckBoxList ID="chkAllowedRoles" runat="server" RepeatColumns="2" DataTextField="RoleName" DataValueField="RoleId" AutoPostBack="true" OnSelectedIndexChanged="chkAllowedRoles_SelectedIndexChanged" />
 </div>
 
 <div class="dnnFormItem">

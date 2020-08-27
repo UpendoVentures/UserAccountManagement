@@ -33,7 +33,6 @@ namespace Connect.Modules.UserManagement.AccountManagement
 {
     public partial class Settings : DotNetNuke.Entities.Modules.ModuleSettingsBase
     {
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
         public override void LoadSettings()
         {
             try
@@ -114,7 +113,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
                 objModules.UpdateTabModuleSetting(TabModuleId, "AllowMessageUsers", chkAllowSendMessages.Checked.ToString());
                 objModules.UpdateTabModuleSetting(TabModuleId, "AllowReports", chkAllowReports.Checked.ToString());
-                string strAllowedRoles = "";
+                string strAllowedRoles = string.Empty;
                 foreach (ListItem item in chkAllowedRoles.Items)
                 {
                     if (item.Selected)
@@ -138,7 +137,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     objModules.UpdateTabModuleSetting(TabModuleId, "PreSelectRole", drpPreselectRole.SelectedValue);
                 }
 
-                string strShowUserDetailTabs = "";
+                string strShowUserDetailTabs = string.Empty;
                 foreach (ListItem item in chkUserTabs.Items)
                 {
                     if (item.Selected)
@@ -207,6 +206,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
             drpPreselectRole.DataSource = preselectRoles;
             drpPreselectRole.DataBind();
+
             if (chkAllowedRoles.Items.FindByValue("all").Selected | chkAllowedRoles.Items.FindByValue("-2").Selected)
             {
                 drpPreselectRole.Items.Add(new ListItem(Localization.GetString("DeletedAccounts", LocalResourceFile), "-2"));
@@ -249,13 +249,12 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 item.Text = Localization.GetString("tab" + item.Value, LocalResourceFile);
         }
 
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
-        private void chkAllowExport_CheckedChanged(object sender, EventArgs e)
+        protected void chkAllowExport_CheckedChanged(object sender, EventArgs e)
         {
             dvExportFields.Visible = chkAllowExport.Checked;
         }
 
-        private void chkAllowedRoles_SelectedIndexChanged(object sender, EventArgs e)
+        protected void chkAllowedRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindPreselectedRole();
         }

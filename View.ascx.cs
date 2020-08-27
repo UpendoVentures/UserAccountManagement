@@ -55,16 +55,12 @@ namespace Connect.Modules.UserManagement.AccountManagement
     {
         public View()
         {
-
-            /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
-            /* TODO ERROR: Skipped RegionDirectiveTrivia */
             this.Init += Page_Init;
             this.Load += Page_Load;
         }
 
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(View));
 
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
         private bool _IsReportResult = false;
 
         protected void Page_Init(object sender, EventArgs e)
@@ -86,7 +82,9 @@ namespace Connect.Modules.UserManagement.AccountManagement
             ProcessQuerystring(); // watch out for querystring actions
             JavaScript.RequestRegistration(CommonJs.DnnPlugins);
             JavaScript.RequestRegistration(CommonJs.jQueryUI);
+
             InitializeForm();
+
             var argplhControls = plhUser;
             ProcessFormTemplate(ref argplhControls, GetTemplate(ModuleTheme, Libraries.UserManagement.Constants.TemplateName_AccountForm, CurrentLocale, false), User);
             plhUser = argplhControls;
@@ -104,13 +102,13 @@ namespace Connect.Modules.UserManagement.AccountManagement
             {
 
                 // make sure txtSearch is empty on non-postback requests
-                txtSearch.Text = "";
+                txtSearch.Text = string.Empty;
                 BindRoles();
                 BindSearchColOptions();
                 PersonalizeOptions();
                 BindReports();
                 pnlBackToList.Visible = false;
-                if (Request.QueryString["uid"] is object)
+                if (Request.QueryString["uid"] != null)
                 {
                     if (Information.IsNumeric(Request.QueryString["uid"]))
                     {
@@ -118,7 +116,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     }
                 }
 
-                if (Request.QueryString["Action"] is object)
+                if (Request.QueryString["Action"] != null)
                 {
                     if (Request.QueryString["Action"] == "Messaging")
                     {
@@ -131,12 +129,12 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void grdUsers_PreRender(object sender, EventArgs e)
+        protected void grdUsers_PreRender(object sender, EventArgs e)
         {
             grdUsers.ClientSettings.Scrolling.AllowScroll = false;
         }
 
-        private void btnReport_Click(object sender, EventArgs e)
+        protected void btnReport_Click(object sender, EventArgs e)
         {
             _IsReportResult = true;
             if (drpReports.SelectedIndex > 0)
@@ -151,7 +149,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             pnlCreate.Visible = false;
         }
 
-        private void grdUsers_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void grdUsers_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             BindUsers();
         }
@@ -179,7 +177,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             return Localization.GetString("RoleStatusUnknown", LocalResourceFile);
         }
 
-        protected void grdUsers_ItemDataBound(object sender, GridItemEventArgs e)
+        protected void grdUsers_ItemDataBound(object sender, EventArgs eventArgs)
         {
             if (e.Item.ItemType == GridItemType.AlternatingItem | e.Item.ItemType == GridItemType.Item)
             {
@@ -190,7 +188,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     string intUser = Convert.ToInt32(row["UserID"]).ToString();
                     int intRole = Convert.ToInt32(ctlRoles.SelectedNode.Value);
                     HtmlGenericControl btnHardDelete = (HtmlGenericControl)e.Item.FindControl("btnHardDelete");
-                    if (btnHardDelete is object)
+                    if (btnHardDelete != null)
                     {
                         btnHardDelete.Visible = false;
                         if (intRole == -2)
@@ -200,7 +198,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     }
 
                     HtmlGenericControl btnRemove = (HtmlGenericControl)e.Item.FindControl("btnRemove");
-                    if (btnRemove is object)
+                    if (btnRemove != null)
                     {
                         btnRemove.Visible = false;
                         if (intRole != -2 && intRole != PortalSettings.RegisteredRoleId)
@@ -210,7 +208,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     }
 
                     HtmlGenericControl btnSetStatus = (HtmlGenericControl)e.Item.FindControl("btnSetStatus");
-                    if (btnSetStatus is object)
+                    if (btnSetStatus != null)
                     {
                         btnSetStatus.Visible = false;
                         if (intRole != -2 && intRole != PortalSettings.RegisteredRoleId)
@@ -221,20 +219,22 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     }
 
                     HtmlGenericControl btnSetDeleted = (HtmlGenericControl)e.Item.FindControl("btnSetDeleted");
-                    if (btnSetDeleted is object)
+                    if (btnSetDeleted != null)
                     {
                         btnSetDeleted.Visible = false;
-                        if (AllowDelete && Conversions.ToDouble(intUser) != PortalSettings.AdministratorId && Conversions.ToDouble(intUser) != UserInfo.UserID && ctlRoles.SelectedNode is object && ctlRoles.SelectedNode.Value != "-2")
+                        if (AllowDelete && Conversions.ToDouble(intUser) != PortalSettings.AdministratorId &&
+                            Conversions.ToDouble(intUser) != UserInfo.UserID && ctlRoles.SelectedNode != null &&
+                            ctlRoles.SelectedNode.Value != "-2")
                         {
                             btnSetDeleted.Visible = true;
                         }
                     }
 
                     HtmlGenericControl btnRestore = (HtmlGenericControl)e.Item.FindControl("btnRestore");
-                    if (btnRestore is object)
+                    if (btnRestore != null)
                     {
                         btnRestore.Visible = false;
-                        if (ctlRoles.SelectedNode is object && ctlRoles.SelectedNode.Value == "-2")
+                        if (ctlRoles.SelectedNode != null && ctlRoles.SelectedNode.Value == "-2")
                         {
                             btnRestore.Visible = true;
                         }
@@ -246,19 +246,19 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void btnCancelMessaging_Click(object sender, EventArgs e)
+        protected void btnCancelMessaging_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + Request.QueryString["RoleId"]), false);
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + Request.QueryString["RoleId"]), false);
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        private void btnApplyOptions_Click(object sender, EventArgs e)
+        protected void btnApplyOptions_Click(object sender, EventArgs e)
         {
             SaveGridOptions();
             SaveSearchOptions();
-            if (Request.QueryString["RoleId"] is object)
+            if (Request.QueryString["RoleId"] != null)
             {
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + Request.QueryString["RoleId"]), false);
+                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + Request.QueryString["RoleId"]), false);
                 Context.ApplicationInstance.CompleteRequest();
             }
             else
@@ -268,12 +268,12 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void cmdBack_Click(object sender, EventArgs e)
+        protected void cmdBack_Click(object sender, EventArgs e)
         {
             string url = DotNetNuke.Common.Globals.NavigateURL(TabId);
-            if (Request.QueryString["RoleId"] is object)
+            if (Request.QueryString["RoleId"] != null)
             {
-                url = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + Request.QueryString["RoleId"]);
+                url = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + Request.QueryString["RoleId"]);
             }
 
             Response.Redirect(url, false);
@@ -287,7 +287,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             grdUserRoles.DataSource = userRoles;
         }
 
-        protected void grdUserRoles_ItemDataBound(object sender, GridItemEventArgs e)
+        protected void grdUserRoles_ItemDataBound(object sender, EventArgs eventArgs)
         {
             if (e.Item.ItemType == GridItemType.AlternatingItem | e.Item.ItemType == GridItemType.Item)
             {
@@ -342,17 +342,17 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void btnAddToRole_Click(object sender, EventArgs e)
+        protected void btnAddToRole_Click(object sender, EventArgs e)
         {
             var roleController = new RoleController();
             var effectiveDate = DateTime.Now;
-            if (ctlRoleDatFrom.DbSelectedDate is object)
+            if (ctlRoleDatFrom.DbSelectedDate != null)
             {
                 effectiveDate = Conversions.ToDate(ctlRoleDatFrom.DbSelectedDate);
             }
 
             var expiryDate = Null.NullDate;
-            if (ctlRoleDateTo.DbSelectedDate is object)
+            if (ctlRoleDateTo.DbSelectedDate != null)
             {
                 expiryDate = Conversions.ToDate(ctlRoleDateTo.DbSelectedDate);
             }
@@ -408,7 +408,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             btnNotifyRoleSkip.CommandArgument = "approve";
         }
 
-        private void btnNotifyRoleSkip_Click(object sender, EventArgs e)
+        protected void btnNotifyRoleSkip_Click(object sender, EventArgs e)
         {
             lblRolesNote.Text = Localization.GetString("lblRolesChanged", LocalResourceFile);
             grdUserRoles.Rebind();
@@ -416,7 +416,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             pnlRoleChange_Step2.Visible = false;
         }
 
-        private void btnNotifyRole_Click(object sender, EventArgs e)
+        protected void btnNotifyRole_Click(object sender, EventArgs e)
         {
             string strPassword = Localization.GetString("HiddenPassword", LocalResourceFile);
             if (DotNetNuke.Security.Membership.MembershipProvider.Instance().PasswordRetrievalEnabled)
@@ -438,7 +438,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             pnlRoleChange_Step2.Visible = false;
         }
 
-        private void cmdUpdateAccount_Click(object sender, EventArgs e)
+        protected void cmdUpdateAccount_Click(object sender, EventArgs e)
         {
             UpdateAccount();
             var argplhControls = plhUser;
@@ -446,7 +446,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             plhUser = argplhControls;
         }
 
-        private void cmdUpdateProfile_Click(object sender, EventArgs e)
+        protected void cmdUpdateProfile_Click(object sender, EventArgs e)
         {
             UpdateProfile();
             var argplhControls = plhProfile;
@@ -454,7 +454,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             plhProfile = argplhControls;
         }
 
-        private void cmdUpdateSites_Click(object sender, EventArgs e)
+        protected void cmdUpdateSites_Click(object sender, EventArgs e)
         {
             int uid = Convert.ToInt32(Request.QueryString["uid"]);
             var objCurrentUser = UserController.GetUserById(PortalId, uid);
@@ -463,7 +463,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             {
                 var pCtrl = new PortalController();
                 var objPortal = pCtrl.GetPortal(Convert.ToInt32(cItem.Value));
-                if (objPortal is object)
+                if (objPortal != null)
                 {
                     var objPortalUser = UserController.GetUserById(objPortal.PortalID, uid);
                     try
@@ -478,7 +478,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                                 }
                             }
                         }
-                        else if (objPortalUser is object)
+                        else if (objPortalUser != null)
                         {
                             UserController.RemoveUser(objPortalUser);
                         }
@@ -502,7 +502,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             BindUserSites(uid);
         }
 
-        private void cmdForcePasswordChange_Click(object sender, EventArgs e)
+        protected void cmdForcePasswordChange_Click(object sender, EventArgs e)
         {
             var oUser = User;
             oUser.Membership.UpdatePassword = true;
@@ -510,7 +510,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             BindUser(oUser.UserID);
         }
 
-        private void cmdUnlockAccount_Click(object sender, EventArgs e)
+        protected void cmdUnlockAccount_Click(object sender, EventArgs e)
         {
             Logger.Debug("Begin cmdUnlockAccount_Click()");
             try
@@ -533,7 +533,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             Logger.Debug("End cmdUnlockAccount_Click()");
         }
 
-        private void cmdAuthorizeAccount_Click(object sender, EventArgs e)
+        protected void cmdAuthorizeAccount_Click(object sender, EventArgs e)
         {
             var oUser = User;
             oUser.Membership.Approved = true;
@@ -541,7 +541,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             BindUser(oUser.UserID);
         }
 
-        private void cmdRestoreAccount_Click(object sender, EventArgs e)
+        protected void cmdRestoreAccount_Click(object sender, EventArgs e)
         {
             if (Request.IsAuthenticated == false)
             {
@@ -592,7 +592,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        private void cmdDeleteAccount_Click(object sender, EventArgs e)
+        protected void cmdDeleteAccount_Click(object sender, EventArgs e)
         {
             if (Request.IsAuthenticated == false)
             {
@@ -640,35 +640,35 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
 
             ClearCache();
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + TargetRoleId.ToString()), false);
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + TargetRoleId.ToString()), false);
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        private void cmdCreateAccount_Click(object sender, EventArgs e)
+        protected void cmdCreateAccount_Click(object sender, EventArgs e)
         {
             BindUserCreateForm();
             pnlCreateAccount.Visible = false;
             pnlBackToList.Visible = true;
         }
 
-        private void cmdAddAccount_Click(object sender, EventArgs e)
+        protected void cmdAddAccount_Click(object sender, EventArgs e)
         {
             AddAccount();
         }
 
-        private void btnHardDelete_Click(object sender, EventArgs e)
+        protected void btnHardDelete_Click(object sender, EventArgs e)
         {
             UserController.RemoveDeletedUsers(PortalId);
             ClearCache();
             grdUsers.Rebind();
         }
 
-        private void btnExport_Click(object sender, EventArgs e)
+        protected void btnExport_Click(object sender, EventArgs e)
         {
             Export();
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        protected void btnSearch_Click(object sender, EventArgs e)
         {
             EnsureSafeSearchText();
             if (!string.IsNullOrEmpty(txtSearch.Text.Trim()))
@@ -684,13 +684,13 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void cmdCancelCreate_Click(object sender, EventArgs e)
+        protected void cmdCancelCreate_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + Request.QueryString["RoleId"]), false);
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + Request.QueryString["RoleId"]), false);
             Context.ApplicationInstance.CompleteRequest();
         }
 
-        private void cmdBulkDelete_Click(object sender, EventArgs e)
+        protected void cmdBulkDelete_Click(object sender, EventArgs e)
         {
             if (AllowDelete)
             {
@@ -705,7 +705,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                         if (intUser != Null.NullInteger)
                         {
                             var oUser = UserController.GetUserById(PortalId, intUser);
-                            if (oUser is object && !oUser.IsSuperUser && !(oUser.UserID == PortalSettings.AdministratorId))
+                            if (oUser != null && !oUser.IsSuperUser && !(oUser.UserID == PortalSettings.AdministratorId))
                             {
                                 UserController.DeleteUser(ref oUser, false, false);
                             }
@@ -721,7 +721,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void cmdHardDeleteSelected_Click(object sender, EventArgs e)
+        protected void cmdHardDeleteSelected_Click(object sender, EventArgs e)
         {
             for (int i = 0, loopTo = grdUsers.SelectedItems.Count - 1; i <= loopTo; i++)
             {
@@ -746,7 +746,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             grdUsers.Rebind();
         }
 
-        private void cmdBulkRemove_Click(object sender, EventArgs e)
+        protected void cmdBulkRemove_Click(object sender, EventArgs e)
         {
             var rc = new RoleController();
             int intRole = Convert.ToInt32(Request.QueryString["RoleId"]);
@@ -762,7 +762,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     if (intUser != Null.NullInteger)
                     {
                         var oUser = UserController.GetUserById(PortalId, intUser);
-                        if (oUser is object && !oUser.IsSuperUser && !(oUser.UserID == PortalSettings.AdministratorId & intRole == PortalSettings.AdministratorRoleId))
+                        if (oUser != null && !oUser.IsSuperUser && !(oUser.UserID == PortalSettings.AdministratorId & intRole == PortalSettings.AdministratorRoleId))
                         {
                             RoleController.DeleteUserRole(oUser, role, PortalSettings, false);
                         }
@@ -777,9 +777,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             grdUsers.Rebind();
         }
 
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
-        private void btnNotifyUser_Click(object sender, EventArgs e)
+        protected void btnNotifyUser_Click(object sender, EventArgs e)
         {
             try
             {
@@ -792,8 +790,6 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-
-
         /// <summary>
         /// Sends an email to a users
         /// </summary>
@@ -804,7 +800,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             string strPassword = Localization.GetString("HiddenPassword", LocalResourceFile);
             if (DotNetNuke.Security.Membership.MembershipProvider.Instance().PasswordRetrievalEnabled)
             {
-                strPassword = DotNetNuke.Security.Membership.MembershipProvider.Instance().GetPassword(user, "");
+                strPassword = DotNetNuke.Security.Membership.MembershipProvider.Instance().GetPassword(user, string.Empty);
             }
 
             string strBody = body.Replace(Localization.GetString("HiddenPassword", LocalResourceFile), strPassword);
@@ -812,14 +808,11 @@ namespace Connect.Modules.UserManagement.AccountManagement
             DotNetNuke.Services.Mail.Mail.SendEmail(PortalSettings.Email, user.Email, strSubject, strBody);
         }
 
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
-        private void btnSendMessage_Click(object sender, EventArgs e)
+        protected void btnSendMessage_Click(object sender, EventArgs e)
         {
             try
             {
-                var users = new List<UserInfo>();
-                users.Add(User);
+                var users = new List<UserInfo> {User};
                 SendMessage(users, txtMessageSubject.Text, txtMessageBody.Text);
                 DotNetNuke.UI.Skins.Skin.AddModuleMessage(this, Localization.GetString("InternalMessagesSent", LocalResourceFile), DotNetNuke.UI.Skins.Controls.ModuleMessage.ModuleMessageType.GreenSuccess);
             }
@@ -829,7 +822,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void btnSendMessages_Click(object sender, EventArgs e)
+        protected void btnSendMessages_Click(object sender, EventArgs e)
         {
             var recipients = new List<UserInfo>();
             DataSet ds = null;
@@ -861,7 +854,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                             }
                             catch (Exception ex)
                             {
-                                resultMsg += ex.Message + "<br/>";
+                                resultMsg += ex.Message + "<br />";
                             }
                         }
 
@@ -882,7 +875,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                         foreach (DataRow row in ds.Tables[0].Rows)
                         {
                             var oUser = UserController.GetUserById(PortalId, Conversions.ToInteger(row["UserId"]));
-                            if (oUser is object)
+                            if (oUser != null)
                             {
                                 recipients.Add(oUser);
                             }
@@ -913,7 +906,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             string strPassword = Localization.GetString("HiddenPassword", LocalResourceFile);
             if (DotNetNuke.Security.Membership.MembershipProvider.Instance().PasswordRetrievalEnabled)
             {
-                strPassword = DotNetNuke.Security.Membership.MembershipProvider.Instance().GetPassword(User, "");
+                strPassword = DotNetNuke.Security.Membership.MembershipProvider.Instance().GetPassword(User, string.Empty);
             }
 
             string strBody = body.Replace(Localization.GetString("HiddenPassword", LocalResourceFile), strPassword);
@@ -924,9 +917,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             ServiceLocator<DotNetNuke.Services.Social.Messaging.IMessagingController, DotNetNuke.Services.Social.Messaging.MessagingController>.Instance.SendMessage(message, null, users, null);
         }
 
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
-        private void cmdResetPasswordLink_Click(object sender, EventArgs e)
+        protected void cmdResetPasswordLink_Click(object sender, EventArgs e)
         {
             pnlResetButton.Visible = false;
             pnlPassword_Step1.Visible = false;
@@ -934,7 +925,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             BindPasswordNotification();
         }
 
-        private void cmdUpdatePassword_Click(object sender, EventArgs e)
+        protected void cmdUpdatePassword_Click(object sender, EventArgs e)
         {
             bool blnProceed = true;
 
@@ -960,11 +951,11 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
             if (blnProceed)
             {
-                string strPassword = "";
+                string strPassword = string.Empty;
                 strPassword = txtPassword1.Text;
                 try
                 {
-                    if (UserController.ChangePassword(User, "", strPassword))
+                    if (UserController.ChangePassword(User, string.Empty, strPassword))
                     {
                         lblPasswordNote.Text = Localization.GetString("PasswordSetNotifyQuestion", LocalResourceFile);
                         pnlPassword_Step1.Visible = false;
@@ -983,12 +974,12 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
         }
 
-        private void btnNotifyPassword_Click(object sender, EventArgs e)
+        protected void btnNotifyPassword_Click(object sender, EventArgs e)
         {
             string strPassword = Localization.GetString("HiddenPassword", LocalResourceFile);
             if (DotNetNuke.Security.Membership.MembershipProvider.Instance().PasswordRetrievalEnabled)
             {
-                strPassword = DotNetNuke.Security.Membership.MembershipProvider.Instance().GetPassword(User, "");
+                strPassword = DotNetNuke.Security.Membership.MembershipProvider.Instance().GetPassword(User, string.Empty);
             }
 
             string strBody = txtNotifyPasswordBody.Content.Replace(Localization.GetString("HiddenPassword", LocalResourceFile), strPassword);
@@ -1017,26 +1008,26 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 pnlResetButton.Visible = true;
                 pnlPassword_Step1.Visible = false;
                 pnlPassword_Step2.Visible = false;
-                txtPassword1.Text = "";
-                txtPassword2.Text = "";
+                txtPassword1.Text = string.Empty;
+                txtPassword2.Text = string.Empty;
             }
             else if (DotNetNuke.Security.Membership.MembershipProvider.Instance().PasswordRetrievalEnabled == true)
             {
                 pnlResetButton.Visible = false;
                 pnlPassword_Step1.Visible = true;
                 pnlPassword_Step2.Visible = false;
-                txtPassword1.Text = "";
-                txtPassword2.Text = "";
+                txtPassword1.Text = string.Empty;
+                txtPassword2.Text = string.Empty;
             }
         }
 
-        private void btnNotifyPasswordSkip_Click(object sender, EventArgs e)
+        protected void btnNotifyPasswordSkip_Click(object sender, EventArgs e)
         {
             lblPasswordNote.Text = Localization.GetString("PasswordSet", LocalResourceFile);
             pnlPassword_Step1.Visible = true;
             pnlPassword_Step2.Visible = false;
-            txtPassword1.Text = "";
-            txtPassword2.Text = "";
+            txtPassword1.Text = string.Empty;
+            txtPassword2.Text = string.Empty;
         }
 
         private void BindPasswordNotification()
@@ -1064,8 +1055,6 @@ namespace Connect.Modules.UserManagement.AccountManagement
             txtNotifyPasswordBody.Content = strTemplate;
         }
 
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
         private void ProcessQuerystring()
         {
             if (Request.IsAuthenticated == false)
@@ -1098,7 +1087,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 TargetRoleId = Convert.ToInt32(Request.QueryString["RoleId"]);
             }
 
-            if (Request.QueryString["Action"] is object)
+            if (Request.QueryString["Action"] != null)
             {
                 switch (Request.QueryString["Action"].ToLower() ?? "")
                 {
@@ -1114,7 +1103,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                             var role = roleController.GetRole(TargetRoleId, PortalId);
                             roleController.UpdateUserRole(PortalId, User.UserID, TargetRoleId, RoleStatus.Approved, false, false);
                             DataCache.RemoveCache("DNNWERK_USERLIST_ROLEID" + TargetRoleId.ToString());
-                            if (Request.QueryString["Notify"] is object)
+                            if (Request.QueryString["Notify"] != null)
                             {
                                 if (Request.QueryString["Notify"] == "1")
                                 {
@@ -1153,7 +1142,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                             var role = roleController.GetRole(TargetRoleId, PortalId);
                             roleController.UpdateUserRole(PortalId, User.UserID, TargetRoleId, RoleStatus.Pending, false, false);
                             DataCache.RemoveCache("DNNWERK_USERLIST_ROLEID" + TargetRoleId.ToString());
-                            if (Request.QueryString["Notify"] is object)
+                            if (Request.QueryString["Notify"] != null)
                             {
                                 if (Request.QueryString["Notify"] == "1")
                                 {
@@ -1202,7 +1191,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                             var role = rc.GetRole(TargetRoleId, PortalId);
                             RoleController.DeleteUserRole(oUser, role, PortalSettings, false);
                             ClearCache();
-                            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + TargetRoleId.ToString()), false);
+                            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + TargetRoleId.ToString()), false);
                             Context.ApplicationInstance.CompleteRequest();
                             break;
                         }
@@ -1229,7 +1218,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
                                 UserController.DeleteUser(ref oUser, false, false);
                                 ClearCache();
-                                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + TargetRoleId.ToString()), false);
+                                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + TargetRoleId.ToString()), false);
                                 Context.ApplicationInstance.CompleteRequest();
                             }
 
@@ -1268,7 +1257,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                             }
 
                             ClearCache();
-                            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=" + oUser.UserID.ToString(), "RoleId=" + PortalSettings.RegisteredRoleId.ToString(), "Action=Edit"), false);
+                            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "uid=" + oUser.UserID.ToString(), "RoleId=" + PortalSettings.RegisteredRoleId.ToString(), "Action=Edit"), false);
                             Context.ApplicationInstance.CompleteRequest();
                             break;
                         }
@@ -1295,18 +1284,18 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 return;
             }
 
-            if (objUser is object)
+            if (objUser != null)
             {
-                if (UserInfo is object)
+                if (UserInfo != null)
                 {
                     DataCache.ClearUserCache(PortalSettings.PortalId, Context.User.Identity.Name);
                 }
 
                 var objPortalSecurity = new PortalSecurity();
                 objPortalSecurity.SignOut();
-                string password = UserController.GetPassword(ref objUser, "");
+                string password = UserController.GetPassword(ref objUser, string.Empty);
                 var status = default(UserLoginStatus);
-                UserController.UserLogin(PortalSettings.PortalId, objUser.Username, password, "", PortalSettings.PortalName, Request.UserHostAddress, ref status, false);
+                UserController.UserLogin(PortalSettings.PortalId, objUser.Username, password, string.Empty, PortalSettings.PortalName, Request.UserHostAddress, ref status, false);
                 Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(PortalSettings.HomeTabId), false);
                 Context.ApplicationInstance.CompleteRequest();
             }
@@ -1326,7 +1315,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     {
                         var rc = new RoleController();
                         var role = rc.GetRole(roleid, PortalId);
-                        if (role is object)
+                        if (role != null)
                         {
                             lblCreateAccountNote.Text = string.Format(Localization.GetString("CreateAccountInRole", LocalResourceFile), rc.GetRole(roleid, PortalId).RoleName);
                         }
@@ -1340,7 +1329,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
         private void AddAccount()
         {
-            string strMessage = "";
+            string strMessage = string.Empty;
             bool blnUpdateUsername = false;
             bool blnUpdateFirstname = false;
             bool blnUpdateLastname = false;
@@ -1348,7 +1337,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             bool blnUpdatePassword = false;
             bool blnUpdateEmail = false;
             TextBox txtUsername = (TextBox)FindControlRecursive(plhCreate, plhCreate.ID + "_" + Libraries.UserManagement.Constants.ControlId_Username);
-            blnUpdateUsername = txtUsername is object;
+            blnUpdateUsername = txtUsername != null;
             if (blnUpdateUsername)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Username, plhCreate))
@@ -1361,7 +1350,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
 
             TextBox txtEmail = (TextBox)FindControlRecursive(plhCreate, plhCreate.ID + "_" + Libraries.UserManagement.Constants.ControlId_Email);
-            blnUpdateEmail = txtEmail is object;
+            blnUpdateEmail = txtEmail != null;
             if (blnUpdateEmail)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Email, plhCreate))
@@ -1375,7 +1364,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
             TextBox txtPassword = (TextBox)FindControlRecursive(plhCreate, plhCreate.ID + "_" + Libraries.UserManagement.Constants.ControlId_Password1);
             TextBox txtPassword2 = (TextBox)FindControlRecursive(plhCreate, plhCreate.ID + "_" + Libraries.UserManagement.Constants.ControlId_Password2);
-            blnUpdatePassword = txtPassword is object && txtPassword2 is object;
+            blnUpdatePassword = txtPassword != null && txtPassword2 != null;
             if (blnUpdatePassword)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Password1, plhCreate))
@@ -1396,7 +1385,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
 
             TextBox txtFirstName = (TextBox)FindControlRecursive(plhCreate, plhCreate.ID + "_" + Libraries.UserManagement.Constants.ControlId_Firstname);
-            blnUpdateFirstname = txtFirstName is object;
+            blnUpdateFirstname = txtFirstName != null;
             if (blnUpdateFirstname)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Firstname, plhCreate))
@@ -1409,7 +1398,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
 
             TextBox txtLastName = (TextBox)FindControlRecursive(plhCreate, plhCreate.ID + "_" + Libraries.UserManagement.Constants.ControlId_Lastname);
-            blnUpdateLastname = txtLastName is object;
+            blnUpdateLastname = txtLastName != null;
             if (blnUpdateLastname)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Lastname, plhCreate))
@@ -1422,21 +1411,23 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
 
             TextBox txtDisplayName = (TextBox)FindControlRecursive(plhCreate, plhCreate.ID + "_" + Libraries.UserManagement.Constants.ControlId_Displayname);
-            blnUpdateDisplayname = txtDisplayName is object;
+            blnUpdateDisplayname = txtDisplayName != null;
             if (strMessage.Length > 0)
             {
                 lblCreateAccountNote.Text = Localization.GetString("FieldsRequired", LocalResourceFile);
                 return;
             }
 
-            var oUser = new UserInfo();
-            oUser.Membership.Approved = true;
-            oUser.AffiliateID = Null.NullInteger;
-            oUser.PortalID = PortalSettings.PortalId;
-            oUser.Username = "";
-            oUser.DisplayName = "";
-            oUser.Email = "";
-            oUser.Membership.Password = "";
+            var oUser = new UserInfo
+            {
+                Membership = {Approved = true},
+                AffiliateID = Null.NullInteger,
+                PortalID = PortalSettings.PortalId,
+                Username = string.Empty,
+                DisplayName = string.Empty,
+                Email = string.Empty
+            };
+            oUser.Membership.Password = string.Empty;
             if (blnUpdateUsername)
             {
                 oUser.Username = txtUsername.Text.Trim();
@@ -1586,7 +1577,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     {
                         var rc = new RoleController();
                         var role = rc.GetRole(roleid, PortalId);
-                        if (role is object)
+                        if (role != null)
                         {
                             rc.AddUserRole(PortalId, oUser.UserID, role.RoleID, Null.NullDate);
                         }
@@ -1597,13 +1588,13 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 }
             }
 
-            string url = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "uid=" + oUser.UserID.ToString());
+            string url = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "uid=" + oUser.UserID.ToString());
             if ((ctlRoles.SelectedNode.Value ?? "") != (PortalSettings.RegisteredRoleId.ToString() ?? ""))
             {
                 if (Information.IsNumeric(ctlRoles.SelectedNode.Value))
                 {
                     int roleid = Convert.ToInt32(ctlRoles.SelectedNode.Value);
-                    url = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + roleid.ToString(), "uid=" + oUser.UserID.ToString());
+                    url = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + roleid.ToString(), "uid=" + oUser.UserID.ToString());
                 }
             }
 
@@ -1617,7 +1608,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
         {
             var users = new List<UserInfo>();
             DataSet ds = null;
-            string strError = "";
+            string strError = string.Empty;
             if (ctlRoles.SelectedNode is null)
             {
                 _IsReportResult = true;
@@ -1632,12 +1623,12 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 ds = GetUserList();
             }
 
-            if (ds is object)
+            if (ds != null)
             {
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
                     var oUser = UserController.GetUserById(PortalId, Conversions.ToInteger(row["UserId"]));
-                    if (oUser is object)
+                    if (oUser != null)
                     {
                         users.Add(oUser);
                     }
@@ -1733,29 +1724,29 @@ namespace Connect.Modules.UserManagement.AccountManagement
         private string GetPropertyValue(string strProp, UserInfo oUser)
         {
             var prop = ProfileController.GetPropertyDefinitionByName(PortalId, strProp);
-            if (prop is object)
+            if (prop != null)
             {
                 return GetPropertyValue(prop, oUser);
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
 
         private string GetPropertyValue(ProfilePropertyDefinition objProp, UserInfo objUser)
         {
-            string strValue = "";
-            string strPropertyValue = "";
+            string strValue = string.Empty;
+            string strPropertyValue = string.Empty;
             if (!string.IsNullOrEmpty(objUser.Profile.GetPropertyValue(objProp.PropertyName)))
             {
                 strPropertyValue = objUser.Profile.GetPropertyValue(objProp.PropertyName);
             }
 
-            string strType = "";
+            string strType = string.Empty;
             var lc = new ListController();
             var entry = lc.GetListEntryInfo(objProp.DataType);
-            if (entry is object)
+            if (entry != null)
             {
                 strType = entry.Value;
             }
@@ -1782,7 +1773,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                         ListEntryInfo country = null;
                         var countries = new List<ListEntryInfo>();
                         countries = GetList("Country");
-                        if (countries is object)
+                        if (countries != null)
                         {
                             foreach (ListEntryInfo checkCountry in countries)
                             {
@@ -1800,11 +1791,11 @@ namespace Connect.Modules.UserManagement.AccountManagement
                             }
                         }
 
-                        if (country is object)
+                        if (country != null)
                         {
                             var regions = new List<ListEntryInfo>();
                             regions = GetList("Region", country.Value);
-                            if (regions is object)
+                            if (regions != null)
                             {
                                 foreach (ListEntryInfo item in regions)
                                 {
@@ -1830,7 +1821,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     {
                         var entries = new List<ListEntryInfo>();
                         entries = GetList("Country");
-                        if (entries is object)
+                        if (entries != null)
                         {
                             foreach (ListEntryInfo item in entries)
                             {
@@ -1855,7 +1846,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     {
                         var entries = new List<ListEntryInfo>();
                         entries = GetList(objProp.PropertyName);
-                        if (entries is object)
+                        if (entries != null)
                         {
                             foreach (ListEntryInfo item in entries)
                             {
@@ -1883,14 +1874,17 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     }
             }
 
-            return strValue.Replace(Microsoft.VisualBasic.Constants.vbCrLf, "").Replace(Microsoft.VisualBasic.Constants.vbLf, "").Replace(Microsoft.VisualBasic.Constants.vbNewLine, "").Replace(Microsoft.VisualBasic.Constants.vbCr, "");
+            return strValue.Replace(Microsoft.VisualBasic.Constants.vbCrLf, string.Empty)
+                .Replace(Microsoft.VisualBasic.Constants.vbLf, string.Empty)
+                .Replace(Microsoft.VisualBasic.Constants.vbNewLine, string.Empty)
+                .Replace(Microsoft.VisualBasic.Constants.vbCr, string.Empty);
         }
 
         private List<ListEntryInfo> GetList(string strListName)
         {
             var entries = new List<ListEntryInfo>();
             var lc = new ListController();
-            if (DataCache.GetCache("PROPLIST_" + strListName) is object)
+            if (DataCache.GetCache("PROPLIST_" + strListName) != null)
             {
                 entries = (List<ListEntryInfo>)DataCache.GetCache("PROPLIST_" + strListName);
             }
@@ -1907,7 +1901,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
         {
             var entries = new List<ListEntryInfo>();
             var lc = new ListController();
-            if (DataCache.GetCache("PROPLIST_" + strListName) is object)
+            if (DataCache.GetCache("PROPLIST_" + strListName) != null)
             {
                 entries = (List<ListEntryInfo>)DataCache.GetCache("PROPLIST_" + strListName);
             }
@@ -1922,12 +1916,12 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
         private void UpdateAccount()
         {
-            string strMessage = "";
+            string strMessage = string.Empty;
             bool blnUpdateUsername = false;
             bool blnUpdateDisplayname = false;
             bool blnUpdateEmail = false;
             TextBox txtUsername = (TextBox)FindControlRecursive(plhUser, plhUser.ID + "_" + Libraries.UserManagement.Constants.ControlId_Username);
-            blnUpdateUsername = txtUsername is object;
+            blnUpdateUsername = txtUsername != null;
             if (blnUpdateUsername)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Username, plhUser))
@@ -1946,7 +1940,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
 
             TextBox txtEmail = (TextBox)FindControlRecursive(plhUser, plhUser.ID + "_" + Libraries.UserManagement.Constants.ControlId_Email);
-            blnUpdateEmail = txtEmail is object;
+            blnUpdateEmail = txtEmail != null;
             if (blnUpdateEmail)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Email, plhUser))
@@ -1965,7 +1959,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
 
             TextBox txtDisplayName = (TextBox)FindControlRecursive(plhUser, plhUser.ID + "_" + Libraries.UserManagement.Constants.ControlId_Displayname);
-            blnUpdateDisplayname = txtDisplayName is object;
+            blnUpdateDisplayname = txtDisplayName != null;
             if (blnUpdateDisplayname)
             {
                 if (!IsValidUserAttribute(Libraries.UserManagement.Constants.User_Displayname, plhUser))
@@ -2012,13 +2006,13 @@ namespace Connect.Modules.UserManagement.AccountManagement
         private void UpdateProfile()
         {
             var oUser = User;
-            string strMessage = "";
+            string strMessage = string.Empty;
             foreach (string itemProp in GetPropertiesFromTempate(GetTemplate(ModuleTheme, Libraries.UserManagement.Constants.TemplateName_ProfileForm, CurrentLocale, false)))
             {
                 try
                 {
                     var prop = ProfileController.GetPropertyDefinitionByName(PortalId, itemProp.Substring(2)); // itemprop comes in the form U:Propertyname or P:Propertyname
-                    if (prop is object)
+                    if (prop != null)
                     {
                         Control argobjControl2 = plhProfile;
                         if (!IsValidProperty(oUser, prop, ref argobjControl2))
@@ -2052,7 +2046,9 @@ namespace Connect.Modules.UserManagement.AccountManagement
             UserController.UpdateUser(PortalId, oUser);
             var propertiesCollection = new ProfilePropertyDefinitionCollection();
             Control argContainer = plhProfile;
-            UpdateProfileProperties(ref argContainer, ref oUser, ref propertiesCollection, GetPropertiesFromTempate(GetTemplate(ModuleTheme, Libraries.UserManagement.Constants.TemplateName_ProfileForm, CurrentLocale, false)));
+            UpdateProfileProperties(ref argContainer, ref oUser, ref propertiesCollection,
+                GetPropertiesFromTempate(GetTemplate(ModuleTheme,
+                    Libraries.UserManagement.Constants.TemplateName_ProfileForm, CurrentLocale, false)));
             plhProfile = (PlaceHolder)argContainer;
             oUser = ProfileController.UpdateUserProfile(oUser, propertiesCollection);
             lblProfileNote.Text = Localization.GetString("ProfileUpdated", LocalResourceFile);
@@ -2066,7 +2062,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             pnlUser.Visible = true;
             var objController = new UserController();
             var objUser = objController.GetUser(PortalId, UserId);
-            if (objUser is object)
+            if (objUser != null)
             {
                 if (objUser.Membership.IsOnLine)
                 {
@@ -2192,7 +2188,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             {
                 var cItem = new ListItem(objPortal.PortalName, objPortal.PortalID.ToString());
                 cItem.Selected = false;
-                if (UserController.GetUserById(objPortal.PortalID, UserId) is object)
+                if (UserController.GetUserById(objPortal.PortalID, UserId) != null)
                 {
                     cItem.Selected = true;
                 }
@@ -2383,7 +2379,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             pnlCreateAccount.Visible = AllowCreate;
             pnlExport.Visible = AllowExport;
             pnlMessageUsers.Visible = AllowMessageUsers;
-            btnMessageUsers.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "Action=Messaging", "RoleId=" + Request.QueryString["RoleId"]);
+            btnMessageUsers.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "Action=Messaging", "RoleId=" + Request.QueryString["RoleId"]);
             btnNotifyPassword.Text = Localization.GetString("btnNotifyPassword", LocalResourceFile);
             btnNotifyPasswordSkip.Text = Localization.GetString("btnNotifyPasswordSkip", LocalResourceFile);
             btnNotifyRoleSkip.Text = Localization.GetString("btnNotifyRoleSkip", LocalResourceFile);
@@ -2402,7 +2398,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             lblSearchOptions.Text = Localization.GetString("lblSearchOptions", LocalResourceFile);
             foreach (ListItem item in chkGridOptions.Items)
             {
-                string strText = "";
+                string strText = string.Empty;
                 strText = Localization.GetString("ProfileProperties_" + item.Value + ".Text", ProfileResourcefile);
                 if (string.IsNullOrEmpty(strText) || strText.StartsWith("RESX:"))
                 {
@@ -2410,7 +2406,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 }
                 else
                 {
-                    item.Text = strText.Replace(":", "");
+                    item.Text = strText.Replace(":", string.Empty);
                 }
             }
         }
@@ -2426,7 +2422,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             {
                 try
                 {
-                    chkSearchCols.Items.Add(new ListItem(LocalizeProperty(prop).Replace(":", ""), prop.PropertyName));
+                    chkSearchCols.Items.Add(new ListItem(LocalizeProperty(prop).Replace(":", string.Empty), prop.PropertyName));
                 }
                 catch (Exception ex)
                 {
@@ -2443,7 +2439,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 item.Selected = false;
             string strSearchCols = "FirstName,LastName,City,Email,";
             var searchcols = DotNetNuke.Services.Personalization.Personalization.GetProfile("dnnWerk_Users_ColOptions", "SearchCols_" + UserId.ToString());
-            if (searchcols is object)
+            if (searchcols != null)
             {
                 if (searchcols.ToString().Length > 0)
                 {
@@ -2467,7 +2463,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
             string strGridCols = "UserId,DisplayName,Username,Email,Country,CreatedDate";
             var gridcols = DotNetNuke.Services.Personalization.Personalization.GetProfile("dnnWerk_Users_ColOptions", "GridCols_" + UserId.ToString());
-            if (gridcols is object)
+            if (gridcols != null)
             {
                 if (gridcols.ToString().Length > 0)
                 {
@@ -2532,7 +2528,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 grdUsers.PageSize = Convert.ToInt32(drpPageSize.SelectedItem.Value);
             }
 
-            if (ctlRoles.SelectedNode is object)
+            if (ctlRoles.SelectedNode != null)
             {
                 try
                 {
@@ -2545,25 +2541,6 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 {
                 }
             }
-
-            // Dim colInRoleSince As GridColumn = grdUsers.Columns.FindByUniqueName("col_InRoleSince")
-            // If Not colInRoleSince Is Nothing Then
-            // colInRoleSince.Visible = True
-            // If ctlRoles.SelectedNode.Value = PortalSettings.RegisteredRoleId.ToString OrElse ctlRoles.SelectedNode.Value = "-2" Then
-            // colInRoleSince.Visible = False
-            // End If
-            // End If
-
-            // Dim colUserSince As GridColumn = grdUsers.Columns.FindByUniqueName("col_UserSince")
-            // If Not colUserSince Is Nothing Then
-            // colUserSince.Visible = False
-            // If ctlRoles.SelectedNode.Value = PortalSettings.RegisteredRoleId.ToString Then
-            // colUserSince.Visible = True
-            // End If
-            // End If
-
-            // End If
-
         }
 
         private void SaveSearchOptions()
@@ -2590,7 +2567,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
         private void SaveGridOptions()
         {
-            string strCols = "";
+            string strCols = string.Empty;
             foreach (ListItem item in chkGridOptions.Items)
             {
                 if (item.Selected == true)
@@ -2630,7 +2607,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                     {
                         if (objRole.RoleGroupID == objGroup.RoleGroupID)
                         {
-                            if (AllowedRoles is object && Array.IndexOf(AllowedRoles, objRole.RoleID.ToString()) > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
+                            if (AllowedRoles != null && Array.IndexOf(AllowedRoles, objRole.RoleID.ToString()) > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
                             {
                                 var rolenode = new DnnTreeNode();
                                 rolenode.Text = objRole.RoleName;
@@ -2639,7 +2616,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
                                 rolenode.Value = objRole.RoleID.ToString();
                                 rolenode.ImageUrl = TemplateSourceDirectory + "/images/users.png";
                                 rolenode.Attributes.Add("IsGroup", Conversions.ToString(false));
-                                rolenode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + objRole.RoleID.ToString());
+                                rolenode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + objRole.RoleID.ToString());
                                 groupnode.Nodes.Add(rolenode);
                                 var roleItem = new DnnComboBoxItem();
                                 roleItem.Text = objRole.RoleName;
@@ -2661,14 +2638,16 @@ namespace Connect.Modules.UserManagement.AccountManagement
                 {
                     if (objRole.RoleGroupID == Null.NullInteger)
                     {
-                        if (AllowedRoles is object && Array.IndexOf(AllowedRoles, objRole.RoleID.ToString()) > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
+                        if (AllowedRoles != null && Array.IndexOf(AllowedRoles, objRole.RoleID.ToString()) > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
                         {
-                            var rolenode = new DnnTreeNode();
-                            rolenode.Text = objRole.RoleName;
-                            rolenode.Value = objRole.RoleID.ToString();
+                            var rolenode = new DnnTreeNode
+                            {
+                                Text = objRole.RoleName, 
+                                Value = objRole.RoleID.ToString()
+                            };
                             rolenode.Attributes.Add("IsGroup", Conversions.ToString(false));
                             rolenode.ImageUrl = TemplateSourceDirectory + "/images/users.png";
-                            rolenode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + objRole.RoleID.ToString());
+                            rolenode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + objRole.RoleID.ToString());
                             ctlRoles.Nodes.Add(rolenode);
                             if (objRole.RoleID != PortalSettings.RegisteredRoleId)
                             {
@@ -2686,35 +2665,39 @@ namespace Connect.Modules.UserManagement.AccountManagement
             {
                 foreach (RoleInfo objRole in roles)
                 {
-                    if (AllowedRoles is object && Array.IndexOf(AllowedRoles, objRole.RoleID.ToString()) > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
+                    if (AllowedRoles != null && Array.IndexOf(AllowedRoles, objRole.RoleID.ToString()) > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
                     {
-                        var rolenode = new DnnTreeNode();
-                        rolenode.Text = objRole.RoleName;
-                        rolenode.Value = objRole.RoleID.ToString();
-                        rolenode.ImageUrl = TemplateSourceDirectory + "/images/users.png";
+                        var rolenode = new DnnTreeNode
+                        {
+                            Text = objRole.RoleName,
+                            Value = objRole.RoleID.ToString(),
+                            ImageUrl = TemplateSourceDirectory + "/images/users.png"
+                        };
                         rolenode.Attributes.Add("IsGroup", Conversions.ToString(false));
-                        rolenode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=" + objRole.RoleID.ToString());
+                        rolenode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=" + objRole.RoleID.ToString());
                         ctlRoles.Nodes.Add(rolenode);
                         if (objRole.RoleID != PortalSettings.RegisteredRoleId)
                         {
-                            var roleItem = new RadComboBoxItem();
-                            roleItem.Text = objRole.RoleName;
-                            roleItem.Value = objRole.RoleID.ToString();
-                            roleItem.ImageUrl = TemplateSourceDirectory + "/images/users.png";
+                            var roleItem = new RadComboBoxItem
+                            {
+                                Text = objRole.RoleName,
+                                Value = objRole.RoleID.ToString(),
+                                ImageUrl = TemplateSourceDirectory + "/images/users.png"
+                            };
                             drpRoles.Items.Add(roleItem);
                         }
                     }
                 }
             }
 
-            if (AllowedRoles is object && Array.IndexOf(AllowedRoles, "-2") > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
+            if (AllowedRoles != null && Array.IndexOf(AllowedRoles, "-2") > -1 | Array.IndexOf(AllowedRoles, "all") > -1 || AllowedRoles is null)
             {
                 var binnode = new DnnTreeNode();
                 binnode.Text = "Deleted Users";
                 binnode.Value = "-2";
                 binnode.ImageUrl = "~/images/action_delete.gif";
                 binnode.Attributes.Add("IsGroup", Conversions.ToString(false));
-                binnode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=-2");
+                binnode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=-2");
                 ctlRoles.Nodes.Add(binnode);
             }
 
@@ -2724,18 +2707,16 @@ namespace Connect.Modules.UserManagement.AccountManagement
             unAuthNode.Value = "-3";
             unAuthNode.ImageUrl = TemplateSourceDirectory + "/images/users.png";
             unAuthNode.Attributes.Add("IsGroup", Conversions.ToString(false));
-            unAuthNode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, "", "RoleId=-3");
+            unAuthNode.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(TabId, string.Empty, "RoleId=-3");
             ctlRoles.Nodes.Add(unAuthNode);
-            string SelectedRole = "";
-            if (Request.QueryString["RoleId"] is object)
+            string SelectedRole = string.Empty;
+            if (Request.QueryString["RoleId"] != null)
             {
                 SelectedRole = Request.QueryString["RoleId"];
             }
             else if (Request.QueryString["RoleId"] is null && Request.QueryString["ReportsResult"] == "true")
             {
             }
-            // Me.ctlFilterTabs.SelectedIndex = 1
-            // Me.pvFilters.SelectedIndex = 1
             else if (PreSelectRole != Null.NullInteger)
             {
                 SelectedRole = PreSelectRole.ToString();
@@ -2792,7 +2773,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
             if (_IsReportResult)
             {
-                string strError = "";
+                string strError = string.Empty;
                 grdUsers.DataSource = GetReportResult(ref strError);
                 if (strError.Length > 0)
                 {
@@ -2805,11 +2786,6 @@ namespace Connect.Modules.UserManagement.AccountManagement
             }
             else
             {
-
-                // If Not Session("Connect_UserSearchTerm") Is Nothing Then
-                // txtSearch.Text = CType(Session("Connect_UserSearchTerm"), String)
-                // End If
-
                 EnsureSafeSearchText();
                 if (txtSearch.Text.Length == 0)
                 {
@@ -2836,7 +2812,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             int intRole = PortalSettings.RegisteredRoleId;
             string strSearch = Null.NullString;
             bool blnUseCache = true;
-            if (ctlRoles.SelectedNode is object)
+            if (ctlRoles.SelectedNode != null)
             {
                 if (Conversions.ToBoolean(ctlRoles.SelectedNode.Attributes["IsGroup"]) == false)
                 {
@@ -2936,7 +2912,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
         private DataSet GetCachedUserList(int RoleId)
         {
             DataSet ds = null;
-            if (DataCache.GetCache("DNNWERK_USERLIST_ROLEID" + RoleId.ToString()) is object)
+            if (DataCache.GetCache("DNNWERK_USERLIST_ROLEID" + RoleId.ToString()) != null)
             {
                 return (DataSet)DataCache.GetCache("DNNWERK_USERLIST_ROLEID" + RoleId.ToString());
             }
@@ -2946,7 +2922,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
         private void CacheUserList(int RoleId, DataSet ds)
         {
-            if (DataCache.GetCache("DNNWERK_USERLIST_ROLEID" + RoleId.ToString()) is object)
+            if (DataCache.GetCache("DNNWERK_USERLIST_ROLEID" + RoleId.ToString()) != null)
             {
                 DataCache.RemoveCache("DNNWERK_USERLIST_ROLEID" + RoleId.ToString());
             }
@@ -2960,7 +2936,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             var roles = objRoleController.GetPortalRoles(PortalId);
             foreach (RoleInfo role in roles)
             {
-                if (DataCache.GetCache("DNNWERK_USERLIST_ROLEID" + role.RoleID.ToString()) is object)
+                if (DataCache.GetCache("DNNWERK_USERLIST_ROLEID" + role.RoleID.ToString()) != null)
                 {
                     DataCache.RemoveCache("DNNWERK_USERLIST_ROLEID" + role.RoleID.ToString());
                 }
@@ -2993,7 +2969,7 @@ namespace Connect.Modules.UserManagement.AccountManagement
             try
             {
                 string sql = GetSQL(Convert.ToInt32(drpReports.SelectedValue));
-                if (sql is object)
+                if (sql != null)
                 {
                     if (sql.Length > 0)
                     {
@@ -3019,36 +2995,36 @@ namespace Connect.Modules.UserManagement.AccountManagement
 
         private string GetSQL(int ReportId)
         {
-            string strSql = "";
+            string strSql = string.Empty;
             strSql = UserReportsController.GetReport(ReportId).Sql;
             return strSql.Replace("@PortalID", PortalSettings.PortalId.ToString());
         }
 
         private void LogError(Exception ex)
         {
-            if (ex is object)
+            if (ex != null)
             {
                 Logger.Error(ex.Message, ex);
-                if (ex.InnerException is object)
+                if (ex.InnerException != null)
                 {
                     LogError(ex.InnerException);
                 }
             }
         }
 
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
-        /* TODO ERROR: Skipped RegionDirectiveTrivia */
         public DotNetNuke.Entities.Modules.Actions.ModuleActionCollection ModuleActions
         {
             get
             {
                 var Actions = new DotNetNuke.Entities.Modules.Actions.ModuleActionCollection();
-                Actions.Add(GetNextActionID(), Localization.GetString("ManageTemplates.Action", LocalResourceFile), DotNetNuke.Entities.Modules.Actions.ModuleActionType.AddContent, "", "", EditUrl("ManageTemplates"), false, SecurityAccessLevel.Edit, true, false);
-                Actions.Add(GetNextActionID(), Localization.GetString("Reports.Action", LocalResourceFile), DotNetNuke.Entities.Modules.Actions.ModuleActionType.AddContent, "", "", EditUrl("Reports"), false, SecurityAccessLevel.Edit, true, false);
+                Actions.Add(GetNextActionID(), Localization.GetString("ManageTemplates.Action", LocalResourceFile),
+                    DotNetNuke.Entities.Modules.Actions.ModuleActionType.AddContent, string.Empty, string.Empty,
+                    EditUrl("ManageTemplates"), false, SecurityAccessLevel.Edit, true, false);
+                Actions.Add(GetNextActionID(), Localization.GetString("Reports.Action", LocalResourceFile),
+                    DotNetNuke.Entities.Modules.Actions.ModuleActionType.AddContent, string.Empty, string.Empty,
+                    EditUrl("Reports"), false, SecurityAccessLevel.Edit, true, false);
                 return Actions;
             }
         }
-
-        /* TODO ERROR: Skipped EndRegionDirectiveTrivia */
     }
 }

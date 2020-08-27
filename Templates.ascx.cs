@@ -192,54 +192,71 @@ namespace Connect.Modules.UserManagement.AccountManagement
             {
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_CreateForm))
                 {
-                    txtCreateFormTemplate.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_CreateForm, drpLocales.SelectedValue, true);
+                    txtCreateFormTemplate.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_CreateForm, drpLocales.SelectedValue, true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_EmailAccountCreated))
                 {
-                    txtEmailAccountCreated.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_EmailAccountCreated, drpLocales.SelectedValue, true);
+                    txtEmailAccountCreated.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_EmailAccountCreated, drpLocales.SelectedValue,
+                        true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_EmailAccountData))
                 {
-                    txtEmailAccountData.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_EmailAccountData, drpLocales.SelectedValue, true);
+                    txtEmailAccountData.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_EmailAccountData, drpLocales.SelectedValue,
+                        true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_EmailAddedToRole))
                 {
-                    txtEmailAddedToRole.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_EmailAddedToRole, drpLocales.SelectedValue, true);
+                    txtEmailAddedToRole.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_EmailAddedToRole, drpLocales.SelectedValue,
+                        true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_EmailRemovedFromRole))
                 {
-                    txtEmailRemovedFromRole.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_EmailRemovedFromRole, drpLocales.SelectedValue, true);
+                    txtEmailRemovedFromRole.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_EmailRemovedFromRole, drpLocales.SelectedValue,
+                        true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_EmailRoleStatusChanged))
                 {
-                    txtEmailRoleStatusChanged.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_EmailRoleStatusChanged, drpLocales.SelectedValue, true);
+                    txtEmailRoleStatusChanged.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_EmailRoleStatusChanged,
+                        drpLocales.SelectedValue, true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_EmailPasswordReset))
                 {
-                    txtEmailPasswordReset.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_EmailPasswordReset, drpLocales.SelectedValue, true);
+                    txtEmailPasswordReset.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_EmailPasswordReset, drpLocales.SelectedValue,
+                        true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_ProfileForm))
                 {
-                    txtProfileFormTemplate.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_ProfileForm, drpLocales.SelectedValue, true);
+                    txtProfileFormTemplate.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_ProfileForm, drpLocales.SelectedValue, true);
                 }
 
                 if (file.EndsWith(Libraries.UserManagement.Constants.TemplateName_AccountForm))
                 {
-                    txtAccountFormTemplate.Text = GetTemplate(drpThemes.SelectedItem.Value, Libraries.UserManagement.Constants.TemplateName_AccountForm, drpLocales.SelectedValue, true);
+                    txtAccountFormTemplate.Text = GetTemplate(drpThemes.SelectedItem.Value,
+                        Libraries.UserManagement.Constants.TemplateName_AccountForm, drpLocales.SelectedValue, true);
                 }
             }
         }
 
         private void SaveTemplate(string SelectedTheme, string TemplateName, string Locale)
         {
-            string path = SelectedTheme + @"\" + TemplateName.Replace(Libraries.UserManagement.Constants.TemplateName_Extension, "." + Locale + Libraries.UserManagement.Constants.TemplateName_Extension);
+            string path = SelectedTheme + @"\" + TemplateName.Replace(
+                Libraries.UserManagement.Constants.TemplateName_Extension,
+                "." + Locale + Libraries.UserManagement.Constants.TemplateName_Extension);
             if ((PortalSettings.DefaultLanguage.ToLower() ?? "") == (Locale.ToLower() ?? "") | string.IsNullOrEmpty(Locale))
             {
                 path = SelectedTheme + @"\" + TemplateName;

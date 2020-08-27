@@ -18,8 +18,8 @@
 </asp:Repeater>
                         
 <ul class="dnnActions">
-    <li><asp:LinkButton ID="cmdNewReport" runat="server" Text="Add Report" resourcekey="cmdNewReport" CssClass="dnnPrimaryAction"></asp:LinkButton></li>
-    <li><asp:LinkButton ID="cmdBack" runat="server" Text="Back to Module" resourcekey="cmdBack" CssClass="dnnSecondaryAction"></asp:LinkButton></li>
+    <li><asp:LinkButton ID="cmdNewReport" runat="server" Text="Add Report" resourcekey="cmdNewReport" CssClass="dnnPrimaryAction" OnClick="cmdNewReport_Click" /></li>
+    <li><asp:LinkButton ID="cmdBack" runat="server" Text="Back to Module" resourcekey="cmdBack" CssClass="dnnSecondaryAction" OnClick="cmdBack_Click" /></li>
 </ul>
                         
 <asp:Panel ID="pnlReportForm" runat="server" Visible="false" style="padding-top:15px;">
@@ -39,10 +39,10 @@
     </div>
 
     <ul class="dnnActions">
-        <li><asp:LinkButton ID="cmdAddReport" runat="server" Text="Update" resourcekey="cmdAddReport" CssClass="dnnPrimaryAction"></asp:LinkButton></li>
-        <li><asp:LinkButton ID="cmdUpdateReport" runat="server" Text="Update" Visible="false" resourcekey="cmdUpdateReport" CssClass="dnnPrimaryAction"></asp:LinkButton></li>
-        <li><asp:LinkButton ID="cmdDeleteReport" runat="server" Text="Delete" Visible="false" resourcekey="cmdDeleteReport" CssClass="dnnSecondaryAction"></asp:LinkButton></li>
-        <li><asp:LinkButton ID="cmdCancelReport" runat="server" Text="Cancel" Visible="true" resourcekey="cmdCancelReport" CssClass="dnnSecondaryAction"></asp:LinkButton></li>
+        <li><asp:LinkButton ID="cmdAddReport" runat="server" Text="Update" resourcekey="cmdAddReport" CssClass="dnnPrimaryAction" OnClick="cmdAddReport_Click" /></li>
+        <li><asp:LinkButton ID="cmdUpdateReport" runat="server" Text="Update" Visible="false" resourcekey="cmdUpdateReport" CssClass="dnnPrimaryAction" OnClick="cmdUpdateReport_Click" /></li>
+        <li><asp:LinkButton ID="cmdDeleteReport" runat="server" Text="Delete" Visible="false" resourcekey="cmdDeleteReport" CssClass="dnnSecondaryAction" OnClick="cmdDeleteReport_Click" /></li>
+        <li><asp:LinkButton ID="cmdCancelReport" runat="server" Text="Cancel" Visible="true" resourcekey="cmdCancelReport" CssClass="dnnSecondaryAction" OnClick="cmdCancelReport_Click" /></li>
     </ul>
                                                         
 </asp:Panel>
