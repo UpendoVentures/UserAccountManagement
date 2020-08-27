@@ -86,17 +86,17 @@ namespace My
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static object RemoveNamespaceAttributes(string[] inScopePrefixes, System.Xml.Linq.XNamespace[] inScopeNs, List<System.Xml.Linq.XAttribute> attributes, object obj)
         {
-            if (obj is object)
+            if (obj != null)
             {
                 System.Xml.Linq.XElement elem = obj as System.Xml.Linq.XElement;
-                if (elem is object)
+                if (elem != null)
                 {
                     return RemoveNamespaceAttributes(inScopePrefixes, inScopeNs, attributes, elem);
                 }
                 else
                 {
                     IEnumerable elems = obj as IEnumerable;
-                    if (elems is object)
+                    if (elems != null)
                     {
                         return RemoveNamespaceAttributes(inScopePrefixes, inScopeNs, attributes, elems);
                     }
@@ -109,10 +109,10 @@ namespace My
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static IEnumerable RemoveNamespaceAttributes(string[] inScopePrefixes, System.Xml.Linq.XNamespace[] inScopeNs, List<System.Xml.Linq.XAttribute> attributes, IEnumerable obj)
         {
-            if (obj is object)
+            if (obj != null)
             {
                 IEnumerable<System.Xml.Linq.XElement> elems = obj as IEnumerable<System.Xml.Linq.XElement>;
-                if (elems is object)
+                if (elems != null)
                 {
                     return System.Linq.Enumerable.Select(elems, new RemoveNamespaceAttributesClosure(inScopePrefixes, inScopeNs, attributes).ProcessXElement);
                 }
@@ -152,7 +152,7 @@ namespace My
             internal object ProcessObject(object obj)
             {
                 System.Xml.Linq.XElement elem = obj as System.Xml.Linq.XElement;
-                if (elem is object)
+                if (elem != null)
                 {
                     return RemoveNamespaceAttributes(m_inScopePrefixes, m_inScopeNs, m_attributes, elem);
                 }
@@ -166,19 +166,19 @@ namespace My
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static System.Xml.Linq.XElement RemoveNamespaceAttributes(string[] inScopePrefixes, System.Xml.Linq.XNamespace[] inScopeNs, List<System.Xml.Linq.XAttribute> attributes, System.Xml.Linq.XElement e)
         {
-            if (e is object)
+            if (e != null)
             {
                 var a = e.FirstAttribute;
-                while (a is object)
+                while (a != null)
                 {
                     var nextA = a.NextAttribute;
                     if (a.IsNamespaceDeclaration)
                     {
                         var ns = a.Annotation<System.Xml.Linq.XNamespace>();
                         string prefix = a.Name.LocalName;
-                        if (ns is object)
+                        if (ns != null)
                         {
-                            if (inScopePrefixes is object && inScopeNs is object)
+                            if (inScopePrefixes != null && inScopeNs != null)
                             {
                                 int lastIndex = inScopePrefixes.Length - 1;
                                 for (int i = 0, loopTo = lastIndex; i <= loopTo; i++)
@@ -200,12 +200,12 @@ namespace My
                                 }
                             }
 
-                            if (a is object)
+                            if (a != null)
                             {
                                 // Prefix is not in scope 
                                 // Now check whether it's going to be in scope because it is in the attributes list 
 
-                                if (attributes is object)
+                                if (attributes != null)
                                 {
                                     int lastIndex = attributes.Count - 1;
                                     for (int i = 0, loopTo1 = lastIndex; i <= loopTo1; i++)
@@ -213,7 +213,7 @@ namespace My
                                         var currentA = attributes[i];
                                         string currentInScopePrefix = currentA.Name.LocalName;
                                         var currentInScopeNs = currentA.Annotation<System.Xml.Linq.XNamespace>();
-                                        if (currentInScopeNs is object)
+                                        if (currentInScopeNs != null)
                                         {
                                             if (prefix.Equals(currentInScopePrefix))
                                             {
@@ -231,7 +231,7 @@ namespace My
                                     }
                                 }
 
-                                if (a is object)
+                                if (a != null)
                                 {
                                     // Prefix is definitely not in scope  
                                     a.Remove();

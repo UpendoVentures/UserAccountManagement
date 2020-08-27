@@ -33,7 +33,7 @@ namespace Connect.Modules.UserManagement.AccountManagement.Services
                     dr = DataProvider.Instance().ExecuteReader("Connect_Accounts_SearchRoleMembers", postData.RoleId, postData.SearchText, postData.SearchCols);
                 }
 
-                if (dr is object)
+                if (dr != null)
                 {
                     while (dr.Read())
                     {
